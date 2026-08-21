@@ -1,6 +1,75 @@
-/* =========================
-   LOGIN
-========================= */
+/* =====================================================
+   SIES GST
+   CSE IoT LED DISPLAY MANAGEMENT SYSTEM
+===================================================== */
+
+
+/* =====================================================
+   INITIAL DATA
+===================================================== */
+
+let messages = [
+
+    {
+        id: 1,
+        text: "Congratulations to all CSE IoT achievers!",
+        effect: "scroll-left",
+        duration: 10,
+        status: "Active"
+    },
+
+    {
+        id: 2,
+        text: "Internal Assessment schedule has been updated.",
+        effect: "static",
+        duration: 10,
+        status: "Active"
+    },
+
+    {
+        id: 3,
+        text: "All students are requested to check the latest notice.",
+        effect: "scroll-left",
+        duration: 10,
+        status: "Active"
+    }
+
+];
+
+
+let historyData = [
+
+    {
+        date: "21 Aug 2026",
+        time: "10:30 AM",
+        action: "Added",
+        message: "Congratulations to all CSE IoT achievers!",
+        effect: "Scroll Left",
+        status: "Displayed"
+    },
+
+    {
+        date: "21 Aug 2026",
+        time: "11:05 AM",
+        action: "Edited",
+        message: "Internal Assessment schedule has been updated.",
+        effect: "Static",
+        status: "Displayed"
+    }
+
+];
+
+
+let selectedMessageId = null;
+
+let currentPreviewIndex = 0;
+
+let previewTimer = null;
+
+
+/* =====================================================
+   DOM ELEMENTS
+===================================================== */
 
 const loginScreen =
     document.getElementById("loginScreen");
@@ -14,6 +83,73 @@ const loginForm =
 const loginMessage =
     document.getElementById("loginMessage");
 
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const messageList =
+    document.getElementById("messageList");
+
+const messageForm =
+    document.getElementById("messageForm");
+
+const emptyEditor =
+    document.getElementById("emptyEditor");
+
+const messageText =
+    document.getElementById("messageText");
+
+const messageEffect =
+    document.getElementById("messageEffect");
+
+const messageDuration =
+    document.getElementById("messageDuration");
+
+const characterCount =
+    document.getElementById("characterCount");
+
+const deleteMessageBtn =
+    document.getElementById("deleteMessageBtn");
+
+const addMessageBtn =
+    document.getElementById("addMessageBtn");
+
+const ledMessage =
+    document.getElementById("ledMessage");
+
+const previewMessage =
+    document.getElementById("previewMessage");
+
+const previewEffect =
+    document.getElementById("previewEffect");
+
+const displayCounter =
+    document.getElementById("displayCounter");
+
+const historyList =
+    document.getElementById("historyList");
+
+const activityList =
+    document.getElementById("activityList");
+
+const totalMessages =
+    document.getElementById("totalMessages");
+
+const activeMessages =
+    document.getElementById("activeMessages");
+
+const queuedMessages =
+    document.getElementById("queuedMessages");
+
+const historyCount =
+    document.getElementById("historyCount");
+
+const messageCountBadge =
+    document.getElementById("messageCountBadge");
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
 
 loginForm.addEventListener(
     "submit",
@@ -22,348 +158,102 @@ loginForm.addEventListener(
         event.preventDefault();
 
         const username =
-            document.getElementById("username")
-                .value
-                .trim();
+            document.getElementById("username").value.trim();
 
         const password =
-            document.getElementById("password")
-                .value
-                .trim();
+            document.getElementById("password").value.trim();
 
 
-        if (
-            username === "" ||
-            password === ""
-        ) {
+        if (username === "" || password === "") {
 
             loginMessage.textContent =
-                "Please enter your user ID and password.";
+                "Please enter username and password.";
 
             return;
         }
 
 
-        loginMessage.textContent = "";
+        /*
+         * Prototype login.
+         * Any non-empty credentials are accepted.
+         */
 
         loginScreen.classList.add("hidden");
 
         mainApp.classList.remove("hidden");
 
-        window.scrollTo(0, 0);
+        initializeApplication();
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+logoutBtn.addEventListener(
+    "click",
+    function () {
+
+        mainApp.classList.add("hidden");
+
+        loginScreen.classList.remove("hidden");
+
+        loginForm.reset();
+
+        loginMessage.textContent = "";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
     }
 );
 
 
-/* =========================
-   LOGOUT
-========================= */
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        function () {
+function initializeApplication() {
 
-            mainApp.classList.add("hidden");
-
-            loginScreen.classList.remove("hidden");
-
-            document.getElementById("username").value = "";
-
-            document.getElementById("password").value = "";
-
-            window.scrollTo(0, 0);
-
-        }
-    );
-
-
-/* =========================
-   MESSAGE DATA
-========================= */
-
-let messages = [
-
-    {
-        id: 1,
-        category: "topper",
-        text: "CONGRATULATIONS TO OUR TOPPERS",
-        effect: "scroll-left",
-        duration: 5,
-        priority: "normal"
-    },
-
-    {
-        id: 2,
-        category: "event",
-        text: "IOT WORKSHOP ON 25 AUGUST",
-        effect: "scroll-left",
-        duration: 5,
-        priority: "normal"
-    },
-
-    {
-        id: 3,
-        category: "notice",
-        text: "INTERNAL ASSESSMENT STARTS MONDAY",
-        effect: "static",
-        duration: 5,
-        priority: "high"
-    }
-
-];
-
-
-let selectedMessageIndex = 0;
-
-let displayIndex = 0;
-
-let rotationTimer = null;
-
-
-/* =========================
-   HISTORY DATA
-========================= */
-
-let history = [];
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const messageList =
-    document.getElementById("messageList");
-
-const messageEditor =
-    document.getElementById("messageEditor");
-
-const emptyEditor =
-    document.getElementById("emptyEditor");
-
-const addMessageBtn =
-    document.getElementById("addMessageBtn");
-
-const queueCount =
-    document.getElementById("queueCount");
-
-const category =
-    document.getElementById("category");
-
-const messageInput =
-    document.getElementById("message");
-
-const effect =
-    document.getElementById("effect");
-
-const duration =
-    document.getElementById("duration");
-
-const priority =
-    document.getElementById("priority");
-
-const charCount =
-    document.getElementById("charCount");
-
-const saveMessageBtn =
-    document.getElementById("saveMessageBtn");
-
-const deleteMessageBtn =
-    document.getElementById("deleteMessageBtn");
-
-const ledMessage =
-    document.getElementById("ledMessage");
-
-const currentMessageNumber =
-    document.getElementById("currentMessageNumber");
-
-const totalMessages =
-    document.getElementById("totalMessages");
-
-const previewNumber =
-    document.getElementById("previewNumber");
-
-const previewEffect =
-    document.getElementById("previewEffect");
-
-const historyRows =
-    document.getElementById("historyRows");
-
-const messageCount =
-    document.getElementById("messageCount");
-
-
-/* =========================
-   DATE + TIME
-========================= */
-
-function getDateTime() {
-
-    const now = new Date();
-
-    const date =
-        now.toLocaleDateString(
-            "en-IN",
-            {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
-            }
-        );
-
-    const time =
-        now.toLocaleTimeString(
-            "en-IN",
-            {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-            }
-        );
-
-    return {
-        date: date,
-        time: time
-    };
-
-}
-
-
-/* =========================
-   ADD HISTORY
-========================= */
-
-function addHistory(
-    action,
-    message,
-    categoryValue,
-    effectValue
-) {
-
-    const dateTime =
-        getDateTime();
-
-
-    history.unshift({
-
-        date:
-            dateTime.date,
-
-        time:
-            dateTime.time,
-
-        action:
-            action,
-
-        message:
-            message || "No message",
-
-        category:
-            categoryName(categoryValue),
-
-        effect:
-            effectName(effectValue)
-
-    });
-
+    renderMessages();
 
     renderHistory();
 
+    renderActivity();
+
+    updateStats();
+
+    startPreview();
+
 }
 
 
-/* =========================
-   CATEGORY NAME
-========================= */
-
-function categoryName(value) {
-
-    const names = {
-
-        notice:
-            "College Notice",
-
-        topper:
-            "Topper / Achievement",
-
-        event:
-            "Event / Workshop",
-
-        emergency:
-            "Important Alert",
-
-        custom:
-            "Custom Message"
-
-    };
-
-    return names[value]
-        || "Custom Message";
-}
-
-
-/* =========================
-   EFFECT NAME
-========================= */
-
-function effectName(value) {
-
-    const names = {
-
-        static:
-            "Static",
-
-        "scroll-left":
-            "Scroll Left",
-
-        "scroll-right":
-            "Scroll Right",
-
-        "slide-left":
-            "Slide Left",
-
-        "slide-right":
-            "Slide Right",
-
-        blink:
-            "Blink"
-
-    };
-
-    return names[value]
-        || "Static";
-}
-
-
-/* =========================
+/* =====================================================
    RENDER MESSAGE LIST
-========================= */
+===================================================== */
 
-function renderMessageList() {
+function renderMessages() {
 
     messageList.innerHTML = "";
 
 
     messages.forEach(
-        function (item, index) {
+        function (message, index) {
 
             const card =
                 document.createElement("div");
 
-
-            card.className =
-                "message-card";
+            card.className = "message-card";
 
 
             if (
-                index === selectedMessageIndex
+                selectedMessageId === message.id
             ) {
 
-                card.classList.add(
-                    "selected"
-                );
+                card.classList.add("selected");
 
             }
 
@@ -377,25 +267,23 @@ function renderMessageList() {
                     </span>
 
                     <span class="message-card-effect">
-                        ${effectName(item.effect)}
+                        ${formatEffect(message.effect)}
                     </span>
 
                 </div>
 
-
                 <h4>
-                    ${item.text || "Empty message"}
+                    ${escapeHTML(message.text)}
                 </h4>
-
 
                 <div class="message-card-bottom">
 
                     <span>
-                        ${categoryName(item.category)}
+                        ${message.duration}s display
                     </span>
 
                     <span>
-                        ${item.duration}s
+                        ${message.status}
                     </span>
 
                 </div>
@@ -407,7 +295,7 @@ function renderMessageList() {
                 "click",
                 function () {
 
-                    selectMessage(index);
+                    selectMessage(message.id);
 
                 }
             );
@@ -419,135 +307,111 @@ function renderMessageList() {
     );
 
 
-    queueCount.textContent =
-        `${messages.length} messages`;
-
-
-    messageCount.textContent =
-        String(messages.length)
-            .padStart(2, "0");
-
-
-    totalMessages.textContent =
-        messages.length;
-
-
-    renderLatestUpdates();
+    messageCountBadge.textContent =
+        messages.length +
+        (messages.length === 1 ? " message" : " messages");
 
 }
 
 
-/* =========================
+/* =====================================================
    SELECT MESSAGE
-========================= */
+===================================================== */
 
-function selectMessage(index) {
+function selectMessage(id) {
 
-    if (!messages[index]) {
+    selectedMessageId = id;
+
+
+    const message =
+        messages.find(
+            item => item.id === id
+        );
+
+
+    if (!message) {
+
         return;
+
     }
 
 
-    selectedMessageIndex =
-        index;
+    emptyEditor.classList.add("hidden");
+
+    messageForm.classList.remove("hidden");
 
 
-    const item =
-        messages[index];
+    messageText.value =
+        message.text;
 
+    messageEffect.value =
+        message.effect;
 
-    emptyEditor.classList.add(
-        "hidden"
-    );
-
-    messageEditor.classList.remove(
-        "hidden"
-    );
-
-
-    category.value =
-        item.category;
-
-    messageInput.value =
-        item.text;
-
-    effect.value =
-        item.effect;
-
-    duration.value =
-        item.duration;
-
-    priority.value =
-        item.priority;
+    messageDuration.value =
+        message.duration;
 
 
     updateCharacterCount();
 
-    renderMessageList();
+    renderMessages();
 
 }
 
 
-/* =========================
+/* =====================================================
    ADD MESSAGE
-========================= */
+===================================================== */
 
 addMessageBtn.addEventListener(
     "click",
     function () {
 
+        const newId =
+            Date.now();
+
+
         const newMessage = {
 
-            id:
-                Date.now(),
+            id: newId,
 
-            category:
-                "custom",
+            text: "New college announcement",
 
-            text:
-                "NEW DISPLAY MESSAGE",
+            effect: "scroll-left",
 
-            effect:
-                "scroll-left",
+            duration: 10,
 
-            duration:
-                5,
-
-            priority:
-                "normal"
+            status: "Active"
 
         };
 
 
-        messages.push(
-            newMessage
-        );
+        messages.push(newMessage);
 
 
-        selectedMessageIndex =
-            messages.length - 1;
+        selectedMessageId =
+            newId;
 
 
         addHistory(
             "Added",
             newMessage.text,
-            newMessage.category,
             newMessage.effect
         );
 
 
-        renderMessageList();
+        selectMessage(newId);
 
-        selectMessage(
-            selectedMessageIndex
-        );
+        renderHistory();
 
+        renderActivity();
 
-        startDisplayRotation();
+        updateStats();
+
+        restartPreview();
 
 
         document
-            .getElementById("create")
+            .getElementById("workspace")
             .scrollIntoView({
                 behavior: "smooth"
             });
@@ -556,317 +420,441 @@ addMessageBtn.addEventListener(
 );
 
 
-/* =========================
-   SAVE / EDIT MESSAGE
-========================= */
+/* =====================================================
+   SAVE MESSAGE
+===================================================== */
 
-saveMessageBtn.addEventListener(
-    "click",
-    function () {
+messageForm.addEventListener(
+    "submit",
+    function (event) {
+
+        event.preventDefault();
+
 
         if (
-            !messages[selectedMessageIndex]
+            selectedMessageId === null
         ) {
 
             return;
+
         }
 
 
-        const oldMessage =
-            messages[selectedMessageIndex];
+        const message =
+            messages.find(
+                item =>
+                    item.id === selectedMessageId
+            );
 
 
-        const updatedMessage = {
+        if (!message) {
 
-            ...oldMessage,
+            return;
 
-            category:
-                category.value,
-
-            text:
-                messageInput.value.trim()
-                || "NEW DISPLAY MESSAGE",
-
-            effect:
-                effect.value,
-
-            duration:
-                Number(duration.value),
-
-            priority:
-                priority.value
-
-        };
+        }
 
 
-        messages[
-            selectedMessageIndex
-        ] = updatedMessage;
+        const oldText =
+            message.text;
+
+
+        message.text =
+            messageText.value.trim();
+
+
+        message.effect =
+            messageEffect.value;
+
+
+        message.duration =
+            Number(messageDuration.value);
+
+
+        message.status =
+            "Active";
+
+
+        const action =
+            oldText === message.text
+                ? "Edited"
+                : "Updated";
 
 
         addHistory(
-            "Edited",
-            updatedMessage.text,
-            updatedMessage.category,
-            updatedMessage.effect
+            action,
+            message.text,
+            message.effect
         );
 
 
-        renderMessageList();
+        renderMessages();
 
-        startDisplayRotation();
+        renderHistory();
+
+        renderActivity();
+
+        updateStats();
+
+        restartPreview();
 
 
-        saveMessageBtn.textContent =
-            "Saved ✓";
-
-
-        setTimeout(
-            function () {
-
-                saveMessageBtn.textContent =
-                    "Save Message";
-
-            },
-            1200
+        alert(
+            "Message saved successfully."
         );
 
     }
 );
 
 
-/* =========================
+/* =====================================================
    DELETE MESSAGE
-========================= */
+===================================================== */
 
 deleteMessageBtn.addEventListener(
     "click",
     function () {
 
         if (
-            messages.length === 1
+            selectedMessageId === null
         ) {
-
-            alert(
-                "At least one display message is required."
-            );
 
             return;
 
         }
 
 
-        const deletedMessage =
-            messages[selectedMessageIndex];
+        const message =
+            messages.find(
+                item =>
+                    item.id === selectedMessageId
+            );
 
 
-        addHistory(
-            "Deleted",
-            deletedMessage.text,
-            deletedMessage.category,
-            deletedMessage.effect
-        );
+        if (!message) {
 
-
-        messages.splice(
-            selectedMessageIndex,
-            1
-        );
-
-
-        if (
-            selectedMessageIndex >=
-            messages.length
-        ) {
-
-            selectedMessageIndex =
-                messages.length - 1;
+            return;
 
         }
 
 
-        renderMessageList();
+        const shouldDelete =
+            confirm(
+                "Delete this display message?"
+            );
 
-        selectMessage(
-            selectedMessageIndex
+
+        if (!shouldDelete) {
+
+            return;
+
+        }
+
+
+        addHistory(
+            "Deleted",
+            message.text,
+            message.effect
         );
 
-        startDisplayRotation();
+
+        messages =
+            messages.filter(
+                item =>
+                    item.id !== selectedMessageId
+            );
+
+
+        selectedMessageId = null;
+
+
+        messageForm.classList.add("hidden");
+
+        emptyEditor.classList.remove("hidden");
+
+
+        renderMessages();
+
+        renderHistory();
+
+        renderActivity();
+
+        updateStats();
+
+        restartPreview();
 
     }
 );
 
 
-/* =========================
+/* =====================================================
    CHARACTER COUNT
-========================= */
+===================================================== */
 
-function updateCharacterCount() {
-
-    charCount.textContent =
-        messageInput.value.length;
-
-}
-
-
-messageInput.addEventListener(
+messageText.addEventListener(
     "input",
     updateCharacterCount
 );
 
 
-/* =========================
-   DISPLAY MESSAGE
-========================= */
+function updateCharacterCount() {
 
-function displayMessage(index) {
+    characterCount.textContent =
+        messageText.value.length +
+        " / 100";
 
-    if (
-        messages.length === 0
-    ) {
+}
 
-        ledMessage.textContent =
-            "ADD A MESSAGE";
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+function startPreview() {
+
+    clearInterval(previewTimer);
+
+
+    if (messages.length === 0) {
+
+        showEmptyPreview();
 
         return;
 
     }
 
 
-    displayIndex =
-        index % messages.length;
+    currentPreviewIndex = 0;
+
+    showPreviewMessage();
 
 
-    const item =
-        messages[displayIndex];
-
-
-    ledMessage.className =
-        "led-message";
-
-
-    ledMessage.classList.add(
-        item.effect
-    );
-
-
-    ledMessage.textContent =
-        item.text
-        || "NO MESSAGE";
-
-
-    currentMessageNumber.textContent =
-        displayIndex + 1;
-
-
-    totalMessages.textContent =
-        messages.length;
-
-
-    previewNumber.textContent =
-        `Message ${displayIndex + 1}`;
-
-
-    previewEffect.textContent =
-        effectName(item.effect);
-
-
-    ledMessage.style.animation =
-        "none";
-
-    void ledMessage.offsetWidth;
-
-    ledMessage.style.animation =
-        "";
-
-
-    startNextRotation(
-        item.duration
-    );
-
-}
-
-
-/* =========================
-   ROTATION
-========================= */
-
-function startNextRotation(seconds) {
-
-    clearTimeout(
-        rotationTimer
-    );
-
-
-    rotationTimer =
-        setTimeout(
+    previewTimer =
+        setInterval(
             function () {
 
-                displayIndex++;
-
-
                 if (
-                    displayIndex >=
-                    messages.length
+                    messages.length === 0
                 ) {
 
-                    displayIndex = 0;
+                    return;
 
                 }
 
 
-                displayMessage(
-                    displayIndex
-                );
+                currentPreviewIndex++;
+
+                if (
+                    currentPreviewIndex >=
+                    messages.length
+                ) {
+
+                    currentPreviewIndex = 0;
+
+                }
+
+
+                showPreviewMessage();
 
             },
 
-            seconds * 1000
-
+            7000
         );
 
 }
 
 
-function startDisplayRotation() {
+function restartPreview() {
 
-    clearTimeout(
-        rotationTimer
-    );
+    clearInterval(previewTimer);
+
+    startPreview();
+
+}
 
 
-    displayIndex = 0;
+/* =====================================================
+   SHOW PREVIEW MESSAGE
+===================================================== */
+
+function showPreviewMessage() {
+
+    if (
+        messages.length === 0
+    ) {
+
+        showEmptyPreview();
+
+        return;
+
+    }
+
+
+    const message =
+        messages[currentPreviewIndex];
+
+
+    if (!message) {
+
+        return;
+
+    }
+
+
+    ledMessage.className =
+        "led-message " +
+        message.effect;
+
+
+    ledMessage.textContent =
+        message.text;
+
+
+    previewMessage.textContent =
+        message.text;
+
+
+    previewEffect.textContent =
+        formatEffect(message.effect);
+
+
+    displayCounter.textContent =
+        (currentPreviewIndex + 1) +
+        " / " +
+        messages.length;
+
+}
+
+
+/* =====================================================
+   EMPTY PREVIEW
+===================================================== */
+
+function showEmptyPreview() {
+
+    ledMessage.className =
+        "led-message static";
+
+    ledMessage.textContent =
+        "No messages available";
+
+    previewMessage.textContent =
+        "No messages available";
+
+    previewEffect.textContent =
+        "Static";
+
+    displayCounter.textContent =
+        "0 / 0";
+
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function addHistory(
+    action,
+    message,
+    effect
+) {
+
+    const now =
+        new Date();
+
+
+    const date =
+        now.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+
+    const time =
+        now.toLocaleTimeString(
+            "en-IN",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+
+    historyData.unshift({
+
+        date: date,
+
+        time: time,
+
+        action: action,
+
+        message: message,
+
+        effect: formatEffect(effect),
+
+        status:
+            action === "Deleted"
+                ? "Removed"
+                : "Displayed"
+
+    });
 
 
     if (
-        messages.length > 0
+        historyData.length > 30
     ) {
 
-        displayMessage(0);
+        historyData.pop();
 
     }
 
 }
 
 
-/* =========================
-   HISTORY TABLE
-========================= */
+/* =====================================================
+   RENDER HISTORY
+===================================================== */
 
 function renderHistory() {
 
-    historyRows.innerHTML = "";
+    historyList.innerHTML = "";
 
 
     if (
-        history.length === 0
+        historyData.length === 0
     ) {
 
-        historyRows.innerHTML = `
+        historyList.innerHTML = `
 
-            <div class="history-empty">
+            <div class="history-row">
 
-                No changes recorded yet.
+                <span>
+                    No history
+                </span>
+
+                <span>
+                    —
+                </span>
+
+                <span>
+                    —
+                </span>
+
+                <span>
+                    No changes recorded yet.
+                </span>
+
+                <span>
+                    —
+                </span>
+
+                <span>
+                    —
+                </span>
 
             </div>
 
@@ -877,7 +865,7 @@ function renderHistory() {
     }
 
 
-    history.forEach(
+    historyData.forEach(
         function (item) {
 
             const row =
@@ -889,15 +877,15 @@ function renderHistory() {
 
 
             let actionClass =
-                "action-added";
+                "action-edited";
 
 
             if (
-                item.action === "Edited"
+                item.action === "Added"
             ) {
 
                 actionClass =
-                    "action-edited";
+                    "action-added";
 
             }
 
@@ -914,46 +902,144 @@ function renderHistory() {
 
             row.innerHTML = `
 
-                <div>
+                <span>
                     ${item.date}
-                </div>
+                </span>
 
-
-                <div>
+                <span>
                     ${item.time}
-                </div>
+                </span>
 
-
-                <div
-                    class="history-action ${actionClass}"
+                <span
+                    class="${actionClass}"
                 >
                     ${item.action}
+                </span>
+
+                <span>
+                    <strong>
+                        ${escapeHTML(item.message)}
+                    </strong>
+                </span>
+
+                <span>
+                    ${item.effect}
+                </span>
+
+                <span>
+                    ${item.status}
+                </span>
+
+            `;
+
+
+            historyList.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LATEST ACTIVITY
+===================================================== */
+
+function renderActivity() {
+
+    activityList.innerHTML = "";
+
+
+    const recent =
+        historyData.slice(0, 5);
+
+
+    if (
+        recent.length === 0
+    ) {
+
+        activityList.innerHTML = `
+
+            <div class="activity-item">
+
+                <div class="activity-icon">
+                    —
                 </div>
 
+                <div class="activity-content">
 
-                <div>
+                    <h3>
+                        No recent updates
+                    </h3>
+
+                    <p>
+                        Display activity will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    recent.forEach(
+        function (item) {
+
+            const activity =
+                document.createElement("div");
+
+
+            activity.className =
+                "activity-item";
+
+
+            activity.innerHTML = `
+
+                <div class="activity-icon">
+                    ${getActionShort(item.action)}
+                </div>
+
+                <div class="activity-content">
+
+                    <h3>
+                        ${escapeHTML(item.message)}
+                    </h3>
+
+                    <p>
+                        ${item.action} •
+                        ${item.effect}
+                    </p>
+
+                </div>
+
+                <div class="activity-time">
 
                     <strong>
-                        ${item.message}
+                        ${item.time}
                     </strong>
 
+                    <span>
+                        ${item.date}
+                    </span>
+
                 </div>
 
+                <div class="activity-status active-status">
 
-                <div>
-                    ${item.category}
-                </div>
+                    ${item.status}
 
-
-                <div>
-                    ${item.effect}
                 </div>
 
             `;
 
 
-            historyRows.appendChild(
-                row
+            activityList.appendChild(
+                activity
             );
 
         }
@@ -962,82 +1048,256 @@ function renderHistory() {
 }
 
 
-/* =========================
-   LATEST UPDATES
-========================= */
+/* =====================================================
+   STATISTICS
+===================================================== */
 
-function renderLatestUpdates() {
+function updateStats() {
 
-    /*
-       Latest Updates remains a separate
-       section and is intentionally not
-       replaced by the history table.
-    */
+    totalMessages.textContent =
+        messages.length;
+
+
+    activeMessages.textContent =
+        messages.filter(
+            item =>
+                item.status === "Active"
+        ).length;
+
+
+    queuedMessages.textContent =
+        Math.max(
+            messages.length - 1,
+            0
+        );
+
+
+    historyCount.textContent =
+        historyData.length;
 
 }
 
 
-/* =========================
-   DIGITAL CLOCK
-========================= */
+/* =====================================================
+   FORMAT EFFECT
+===================================================== */
 
-function updateClock() {
+function formatEffect(effect) {
 
-    const now =
-        new Date();
+    const names = {
 
+        "static":
+            "Static",
 
-    const hours =
-        String(
-            now.getHours()
-        ).padStart(
-            2,
-            "0"
-        );
+        "scroll-left":
+            "Scroll Left",
 
+        "scroll-right":
+            "Scroll Right",
 
-    const minutes =
-        String(
-            now.getMinutes()
-        ).padStart(
-            2,
-            "0"
-        );
+        "slide-left":
+            "Slide Left",
 
+        "slide-right":
+            "Slide Right",
 
-    const seconds =
-        String(
-            now.getSeconds()
-        ).padStart(
-            2,
-            "0"
-        );
+        "blink":
+            "Blink"
+
+    };
 
 
-    document.getElementById(
-        "clock"
-    ).textContent =
-        `${hours}:${minutes}:${seconds}`;
+    return names[effect] || "Static";
 
 }
 
 
-setInterval(
-    updateClock,
-    1000
+/* =====================================================
+   SHORT ACTION
+===================================================== */
+
+function getActionShort(action) {
+
+    if (
+        action === "Added"
+    ) {
+
+        return "ADD";
+
+    }
+
+
+    if (
+        action === "Deleted"
+    ) {
+
+        return "DEL";
+
+    }
+
+
+    return "EDIT";
+
+}
+
+
+/* =====================================================
+   HTML SAFETY
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   NAVBAR ACTIVE STATE
+===================================================== */
+
+const navLinks =
+    document.querySelectorAll(
+        "nav a"
+    );
+
+
+const sections =
+    document.querySelectorAll(
+        "main section[id]"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    function () {
+
+        let current =
+            "home";
+
+
+        sections.forEach(
+            function (section) {
+
+                const sectionTop =
+                    section.offsetTop - 170;
+
+
+                if (
+                    window.scrollY >=
+                    sectionTop
+                ) {
+
+                    current =
+                        section.id;
+
+                }
+
+            }
+        );
+
+
+        navLinks.forEach(
+            function (link) {
+
+                link.classList.remove(
+                    "active-nav"
+                );
+
+
+                const target =
+                    link.getAttribute("href");
+
+
+                if (
+                    target ===
+                    "#" + current
+                ) {
+
+                    link.classList.add(
+                        "active-nav"
+                    );
+
+                }
+
+            }
+        );
+
+    }
 );
 
-updateClock();
+
+/* =====================================================
+   NAVBAR CLICK POSITION
+===================================================== */
+
+navLinks.forEach(
+    function (link) {
+
+        link.addEventListener(
+            "click",
+            function (event) {
+
+                const targetId =
+                    link.getAttribute("href");
 
 
-/* =========================
-   INITIAL LOAD
-========================= */
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
 
-renderMessageList();
 
-selectMessage(0);
+                if (!target) {
 
-renderHistory();
+                    return;
 
-startDisplayRotation();
+                }
+
+
+                event.preventDefault();
+
+
+                const navbar =
+                    document.querySelector(
+                        ".topbar"
+                    );
+
+
+                const navbarHeight =
+                    navbar.offsetHeight;
+
+
+                const targetPosition =
+                    target.getBoundingClientRect().top
+                    +
+                    window.pageYOffset
+                    -
+                    navbarHeight
+                    -
+                    10;
+
+
+                window.scrollTo({
+
+                    top:
+                        targetPosition,
+
+                    behavior:
+                        "smooth"
+
+                });
+
+            }
+        );
+
+    }
+);
