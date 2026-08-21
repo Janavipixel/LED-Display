@@ -1,3 +1,7 @@
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +10,14 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: #f7faf9;
     color: #202b2b;
+    overflow-x: hidden;
 }
 
 .hidden {
@@ -25,13 +31,19 @@ select {
     font-family: inherit;
 }
 
+button {
+    cursor: pointer;
+}
+
 a {
     text-decoration: none;
     color: inherit;
 }
 
 
-/* ================= LOGIN ================= */
+/* =====================================================
+   LOGIN
+===================================================== */
 
 .login-screen {
     min-height: 100vh;
@@ -40,7 +52,7 @@ a {
     align-items: center;
     justify-content: center;
 
-    padding: 25px;
+    padding: 20px;
 
     background:
         linear-gradient(
@@ -53,12 +65,15 @@ a {
 
 .login-card {
     width: 430px;
+    max-width: 100%;
 
-    background: white;
+    background: #ffffff;
 
     padding: 42px;
 
     border: 1px solid #dce8e5;
+
+    border-radius: 8px;
 
     box-shadow:
         0 18px 50px
@@ -67,11 +82,8 @@ a {
 
 .college-mark {
     display: flex;
-
     align-items: center;
-
     gap: 14px;
-
     margin-bottom: 38px;
 }
 
@@ -90,81 +102,58 @@ a {
     overflow: hidden;
 
     padding: 4px;
+
+    background: #ffffff;
 }
 
 .logo-circle img {
     width: 100%;
     height: 100%;
-
     object-fit: contain;
-
-    display: block;
-}
-
-.logo-circle.small {
-    width: 42px;
-    height: 42px;
-
-    padding: 3px;
 }
 
 .college-mark h2,
 .brand h2 {
     font-size: 19px;
-
     letter-spacing: 1px;
 }
 
 .college-mark p,
 .brand span {
     color: #73807f;
-
     font-size: 11px;
-
     margin-top: 3px;
 }
 
 .eyebrow {
     color: #168f87;
-
     font-size: 11px;
-
     font-weight: bold;
-
     letter-spacing: 2px;
-
     margin-bottom: 14px;
 }
 
 .login-heading h1 {
     font-size: 30px;
-
     margin-bottom: 10px;
 }
 
 .login-heading > p:not(.eyebrow) {
     color: #788483;
-
     font-size: 14px;
-
     line-height: 1.5;
-
     margin-bottom: 25px;
 }
 
 .login-card label {
     display: block;
-
     font-size: 13px;
-
     font-weight: bold;
-
     margin: 16px 0 7px;
 }
 
 .login-card input {
     width: 100%;
-
     padding: 13px;
 
     border: 1px solid #d7e2df;
@@ -172,6 +161,8 @@ a {
     background: #fbfdfd;
 
     outline: none;
+
+    border-radius: 5px;
 }
 
 .login-card input:focus {
@@ -183,13 +174,13 @@ a {
 
     background: #1caaa0;
 
-    color: white;
+    color: #ffffff;
 
     padding: 13px 20px;
 
-    cursor: pointer;
-
     font-weight: bold;
+
+    border-radius: 5px;
 
     transition: 0.2s;
 }
@@ -200,63 +191,81 @@ a {
 
 .login-card .primary-btn {
     width: 100%;
-
     margin-top: 22px;
 }
 
 .login-message {
     color: #c65a50;
-
     font-size: 12px;
-
     margin-top: 10px;
 }
 
 .login-note {
     margin-top: 28px;
-
     text-align: center;
-
     color: #9aa6a4;
-
     font-size: 11px;
 }
 
 
-/* ================= NAVBAR ================= */
+/* =====================================================
+   NAVBAR
+===================================================== */
 
 .topbar {
-    min-height: 78px;
+    min-height: 82px;
 
-    background: white;
+    background: #ffffff;
 
-    border-bottom: 1px solid #dce8e5;
+    border-bottom: 1px solid #d7e5e2;
 
     display: flex;
 
     align-items: center;
 
-    padding: 0 6%;
+    padding: 0 5%;
 
     position: sticky;
 
     top: 0;
 
     z-index: 100;
+
+    box-shadow:
+        0 5px 20px
+        rgba(20, 80, 75, 0.07);
 }
 
 .brand {
     display: flex;
-
     align-items: center;
-
-    gap: 11px;
-
-    min-width: 245px;
+    gap: 12px;
+    min-width: 255px;
 }
 
-.brand span {
+.brand .logo-circle {
+    width: 46px;
+    height: 46px;
+
+    border: 2px solid #1caaa0;
+
+    box-shadow:
+        0 3px 10px
+        rgba(28, 170, 160, 0.12);
+}
+
+.brand-text h2 {
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    color: #263332;
+    line-height: 1.2;
+}
+
+.brand-text span {
     display: block;
+    color: #7a8885;
+    font-size: 10px;
+    margin-top: 4px;
 }
 
 nav {
@@ -265,61 +274,143 @@ nav {
     display: flex;
 
     justify-content: center;
+    align-items: center;
 
-    gap: 30px;
+    gap: 5px;
+
+    background: #f3f8f7;
+
+    border: 1px solid #e1ecea;
+
+    padding: 5px;
+
+    border-radius: 12px;
+
+    max-width: 520px;
+
+    margin: 0 auto;
 }
 
 nav a {
-    color: #536260;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    color: #586664;
 
     font-size: 13px;
+
+    font-weight: 600;
+
+    padding: 11px 17px;
+
+    border-radius: 8px;
+
+    transition: 0.2s;
+
+    white-space: nowrap;
+}
+
+nav a::before {
+    font-size: 9px;
+    font-weight: 700;
+    color: #9aa9a6;
+}
+
+nav a:nth-child(1)::before {
+    content: "01";
+}
+
+nav a:nth-child(2)::before {
+    content: "02";
+}
+
+nav a:nth-child(3)::before {
+    content: "03";
+}
+
+nav a:nth-child(4)::before {
+    content: "04";
+}
+
+nav a:nth-child(5)::before {
+    content: "05";
 }
 
 nav a:hover {
+    background: #ffffff;
     color: #168f87;
+
+    box-shadow:
+        0 3px 10px
+        rgba(30, 90, 85, 0.08);
+
+    transform: translateY(-1px);
+}
+
+nav a:first-child {
+    background: #1caaa0;
+    color: #ffffff;
+
+    box-shadow:
+        0 4px 10px
+        rgba(28, 170, 160, 0.20);
+}
+
+nav a:first-child::before {
+    color: rgba(255,255,255,0.75);
 }
 
 .logout-btn {
-    background: white;
+    display: flex;
+    align-items: center;
+    gap: 7px;
 
-    border: 1px solid #cfdcd9;
+    background: #ffffff;
 
-    padding: 9px 16px;
+    border: 1px solid #d2dfdc;
 
-    cursor: pointer;
+    padding: 10px 16px;
 
     color: #465453;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    white-space: nowrap;
+}
+
+.logout-btn::before {
+    content: "↪";
+    font-size: 15px;
+    color: #168f87;
 }
 
 .logout-btn:hover {
     border-color: #1caaa0;
-
     color: #168f87;
+    background: #f1f9f7;
 }
 
 
-/* ================= HERO ================= */
+/* =====================================================
+   HOME
+===================================================== */
 
 .hero {
     max-width: 1200px;
-
     margin: auto;
 
-    padding: 80px 30px 70px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 55px;
+    padding: 80px 30px 65px;
 }
 
 .hero-content {
-    flex: 1;
-
-    max-width: 650px;
+    max-width: 750px;
 }
 
 .hero h1 {
@@ -353,20 +444,21 @@ nav a:hover {
 
     background: #1caaa0;
 
-    color: white;
+    color: #ffffff;
 
     padding: 13px 20px;
 
     font-size: 13px;
 
     font-weight: bold;
+
+    border-radius: 5px;
 }
 
-.hero-btn:hover {
-    background: #168f87;
-}
 
-/* ================= STATS ================= */
+/* =====================================================
+   STATS
+===================================================== */
 
 .stats {
     max-width: 1200px;
@@ -384,7 +476,7 @@ nav a:hover {
 }
 
 .stat-card {
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #dce8e5;
 
@@ -395,6 +487,8 @@ nav a:hover {
     gap: 18px;
 
     align-items: center;
+
+    border-radius: 7px;
 }
 
 .stat-icon {
@@ -418,7 +512,9 @@ nav a:hover {
 }
 
 
-/* ================= HEADINGS ================= */
+/* =====================================================
+   SECTIONS
+===================================================== */
 
 .section-heading {
     margin-bottom: 35px;
@@ -426,7 +522,6 @@ nav a:hover {
 
 .section-heading h2 {
     font-size: 32px;
-
     font-weight: 600;
 }
 
@@ -439,7 +534,9 @@ nav a:hover {
 }
 
 
-/* ================= LATEST UPDATES ================= */
+/* =====================================================
+   UPDATES
+===================================================== */
 
 .activity-section {
     max-width: 1200px;
@@ -452,9 +549,13 @@ nav a:hover {
 }
 
 .activity-list {
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #dce8e5;
+
+    border-radius: 7px;
+
+    overflow: hidden;
 }
 
 .activity-item {
@@ -492,41 +593,35 @@ nav a:hover {
     font-size: 10px;
 
     font-weight: bold;
+
+    border-radius: 5px;
 }
 
 .activity-content h3 {
     font-size: 13px;
-
     margin-bottom: 5px;
 }
 
 .activity-content p {
     font-size: 11px;
-
     color: #899492;
 }
 
 .activity-time strong {
     display: block;
-
     font-size: 11px;
 }
 
 .activity-time span {
     display: block;
-
     color: #899492;
-
     font-size: 10px;
-
     margin-top: 4px;
 }
 
 .activity-status {
     text-align: center;
-
     font-size: 10px;
-
     font-weight: bold;
 }
 
@@ -534,12 +629,10 @@ nav a:hover {
     color: #19966e;
 }
 
-.scheduled-status {
-    color: #b2821b;
-}
 
-
-/* ================= WORKSPACE ================= */
+/* =====================================================
+   WORKSPACE
+===================================================== */
 
 .workspace {
     max-width: 1200px;
@@ -562,15 +655,14 @@ nav a:hover {
 
 .message-manager,
 .editor-panel {
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #dce8e5;
 
     padding: 28px;
+
+    border-radius: 7px;
 }
-
-
-/* ================= MESSAGE QUEUE ================= */
 
 .manager-header {
     display: flex;
@@ -582,7 +674,8 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
-.manager-header h3 {
+.manager-header h3,
+.panel-title h3 {
     font-size: 19px;
 }
 
@@ -594,7 +687,8 @@ nav a:hover {
     margin-top: 5px;
 }
 
-.manager-header > span {
+.manager-header > span,
+.panel-title span {
     background: #e4f5f2;
 
     color: #168f87;
@@ -604,6 +698,8 @@ nav a:hover {
     font-size: 10px;
 
     font-weight: bold;
+
+    border-radius: 20px;
 }
 
 .message-card {
@@ -615,9 +711,11 @@ nav a:hover {
 
     cursor: pointer;
 
-    transition: 0.2s;
+    background: #ffffff;
 
-    background: white;
+    border-radius: 6px;
+
+    transition: 0.2s;
 }
 
 .message-card:hover {
@@ -634,8 +732,6 @@ nav a:hover {
     display: flex;
 
     justify-content: space-between;
-
-    align-items: center;
 
     margin-bottom: 8px;
 }
@@ -685,25 +781,21 @@ nav a:hover {
 
     border: 1px dashed #b9ceca;
 
-    background: white;
+    background: #ffffff;
 
     color: #168f87;
-
-    cursor: pointer;
 
     font-weight: bold;
 
     margin-top: 5px;
-}
 
-.add-message-btn:hover {
-    background: #f0f8f6;
-
-    border-color: #1caaa0;
+    border-radius: 5px;
 }
 
 
-/* ================= EDITOR ================= */
+/* =====================================================
+   EDITOR
+===================================================== */
 
 .panel-title {
     display: flex;
@@ -713,22 +805,6 @@ nav a:hover {
     align-items: center;
 
     margin-bottom: 25px;
-}
-
-.panel-title h3 {
-    font-size: 19px;
-}
-
-.panel-title span {
-    background: #e4f5f2;
-
-    color: #168f87;
-
-    padding: 6px 9px;
-
-    font-size: 10px;
-
-    font-weight: bold;
 }
 
 .empty-editor {
@@ -776,6 +852,8 @@ nav a:hover {
     outline: none;
 
     color: #293332;
+
+    border-radius: 5px;
 }
 
 .editor-panel textarea {
@@ -817,13 +895,13 @@ nav a:hover {
 }
 
 .secondary-btn {
-    background: white;
+    background: #ffffff;
 
     border: 1px solid #cbd9d6;
 
     padding: 13px 20px;
 
-    cursor: pointer;
+    border-radius: 5px;
 }
 
 .danger-btn {
@@ -833,7 +911,9 @@ nav a:hover {
 }
 
 
-/* ================= LIVE PREVIEW ================= */
+/* =====================================================
+   PREVIEW
+===================================================== */
 
 .preview-section {
     max-width: 1200px;
@@ -851,6 +931,8 @@ nav a:hover {
     border: 1px solid #dce8e5;
 
     padding: 30px;
+
+    border-radius: 7px;
 }
 
 .preview-top {
@@ -901,15 +983,19 @@ nav a:hover {
 }
 
 
-/* ================= LED BOARD ================= */
+/* =====================================================
+   LED BOARD
+===================================================== */
 
 .real-board {
-    background: #151c1b;
+    background: #171b1a;
 
     padding: 15px;
 
+    border-radius: 5px;
+
     box-shadow:
-        8px 8px 0 #cadbd8;
+        7px 7px 0 #cadbd8;
 }
 
 .board-top,
@@ -941,6 +1027,8 @@ nav a:hover {
     overflow: hidden;
 
     position: relative;
+
+    border-radius: 3px;
 }
 
 .led-message {
@@ -958,12 +1046,8 @@ nav a:hover {
 
     text-shadow:
         0 0 5px #ff3028,
-        0 0 12px #ff3028,
-        0 0 20px rgba(255, 48, 40, 0.5);
+        0 0 12px #ff3028;
 }
-
-
-/* STATIC */
 
 .led-message.static {
     left: 50%;
@@ -971,16 +1055,12 @@ nav a:hover {
     transform: translateX(-50%);
 }
 
-
-/* SCROLL LEFT */
-
 .led-message.scroll-left {
     animation:
         scrollLeft 7s linear infinite;
 }
 
 @keyframes scrollLeft {
-
     from {
         left: 100%;
     }
@@ -989,9 +1069,6 @@ nav a:hover {
         left: -100%;
     }
 }
-
-
-/* SCROLL RIGHT */
 
 .led-message.scroll-right {
     animation:
@@ -999,7 +1076,6 @@ nav a:hover {
 }
 
 @keyframes scrollRight {
-
     from {
         left: -100%;
     }
@@ -1008,9 +1084,6 @@ nav a:hover {
         left: 100%;
     }
 }
-
-
-/* SLIDE LEFT */
 
 .led-message.slide-left {
     animation:
@@ -1018,7 +1091,6 @@ nav a:hover {
 }
 
 @keyframes slideLeft {
-
     from {
         left: 100%;
     }
@@ -1028,16 +1100,12 @@ nav a:hover {
     }
 }
 
-
-/* SLIDE RIGHT */
-
 .led-message.slide-right {
     animation:
         slideRight 1.2s ease-in-out infinite alternate;
 }
 
 @keyframes slideRight {
-
     from {
         left: -100%;
     }
@@ -1046,9 +1114,6 @@ nav a:hover {
         left: 20%;
     }
 }
-
-
-/* BLINK */
 
 .led-message.blink {
     left: 50%;
@@ -1060,14 +1125,15 @@ nav a:hover {
 }
 
 @keyframes blink {
-
     50% {
         opacity: 0;
     }
 }
 
 
-/* ================= PREVIEW INFO ================= */
+/* =====================================================
+   PREVIEW INFO
+===================================================== */
 
 .preview-info {
     margin-top: 25px;
@@ -1081,11 +1147,13 @@ nav a:hover {
 }
 
 .preview-info div {
-    background: white;
+    background: #ffffff;
 
     padding: 13px;
 
     border: 1px solid #dce8e5;
+
+    border-radius: 5px;
 }
 
 .preview-info span {
@@ -1103,7 +1171,9 @@ nav a:hover {
 }
 
 
-/* ================= HISTORY ================= */
+/* =====================================================
+   HISTORY
+===================================================== */
 
 .notices-section {
     max-width: 1200px;
@@ -1115,18 +1185,24 @@ nav a:hover {
     border-top: 1px solid #dce8e5;
 }
 
-.history-table {
-    background: white;
-
-    border: 1px solid #dce8e5;
+.history-wrapper {
+    width: 100%;
 
     overflow-x: auto;
+
+    border-radius: 7px;
+}
+
+.history-table {
+    min-width: 850px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce8e5;
 }
 
 .history-head,
 .history-row {
-    min-width: 900px;
-
     display: grid;
 
     grid-template-columns:
@@ -1170,18 +1246,6 @@ nav a:hover {
     margin-bottom: 4px;
 }
 
-.history-row small {
-    color: #8b9795;
-
-    font-size: 9px;
-}
-
-.history-action {
-    font-weight: bold;
-
-    font-size: 10px;
-}
-
 .action-added {
     color: #19966e;
 }
@@ -1195,7 +1259,9 @@ nav a:hover {
 }
 
 
-/* ================= FOOTER ================= */
+/* =====================================================
+   FOOTER
+===================================================== */
 
 footer {
     border-top: 1px solid #dce8e5;
@@ -1208,7 +1274,7 @@ footer {
 
     align-items: center;
 
-    background: white;
+    background: #ffffff;
 }
 
 footer strong {
@@ -1222,12 +1288,36 @@ footer p {
 }
 
 
-/* ================= RESPONSIVE ================= */
+/* =====================================================
+   TABLET
+===================================================== */
 
 @media (max-width: 950px) {
 
-    nav {
+    .topbar {
+        padding: 14px 25px;
+
+        flex-wrap: wrap;
+
         gap: 12px;
+    }
+
+    .brand {
+        min-width: auto;
+    }
+
+    nav {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: flex-start;
+
+        overflow-x: auto;
+    }
+
+    .logout-btn {
+        margin-left: auto;
     }
 
     .stats {
@@ -1239,57 +1329,171 @@ footer p {
         grid-template-columns: 1fr;
     }
 
-    .hero {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .hero-image {
-        width: 100%;
-
-        max-width: 600px;
+    .hero h1 {
+        font-size: 46px;
     }
 }
 
 
-@media (max-width: 700px) {
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    html {
+        scroll-padding-top: 145px;
+    }
+
+    #home,
+    #updates,
+    #workspace,
+    #preview,
+    #notices {
+        scroll-margin-top: 145px;
+    }
+
+    .login-screen {
+        padding: 15px;
+    }
+
+    .login-card {
+        padding: 28px 22px;
+    }
 
     .topbar {
-        height: auto;
+        padding: 12px 14px 10px;
 
-        padding: 15px;
+        display: grid;
 
-        flex-wrap: wrap;
+        grid-template-columns:
+            1fr auto;
 
-        gap: 15px;
+        gap: 12px;
+
+        min-height: auto;
+    }
+
+    .brand {
+        min-width: 0;
+
+        gap: 9px;
+    }
+
+    .brand .logo-circle {
+        width: 40px;
+        height: 40px;
+    }
+
+    .brand-text h2 {
+        font-size: 16px;
+    }
+
+    .brand-text span {
+        font-size: 8px;
+    }
+
+    .logout-btn {
+        padding: 9px 11px;
+
+        font-size: 10px;
+
+        margin: 0;
     }
 
     nav {
+        grid-column: 1 / -1;
+
         order: 3;
 
         width: 100%;
 
-        overflow-x: auto;
+        max-width: none;
 
         justify-content: flex-start;
+
+        overflow-x: auto;
+
+        scrollbar-width: none;
+
+        margin: 0;
+    }
+
+    nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    nav a {
+        flex-shrink: 0;
+
+        font-size: 13px;
+
+        padding: 10px 15px;
+    }
+
+    .hero {
+        padding: 48px 20px 42px;
     }
 
     .hero h1 {
         font-size: 38px;
+
+        letter-spacing: -1.2px;
+    }
+
+    .hero-text {
+        font-size: 13px;
+    }
+
+    .hero-btn {
+        width: 100%;
+
+        text-align: center;
     }
 
     .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr 1fr;
+
+        padding:
+            0 15px 45px;
+
+        gap: 10px;
     }
 
-    .two-column {
-        grid-template-columns: 1fr;
+    .stat-card {
+        padding: 17px 13px;
+
+        gap: 10px;
+    }
+
+    .stat-card h3 {
+        font-size: 15px;
+    }
+
+    .stat-card p {
+        font-size: 9px;
+    }
+
+    .activity-section,
+    .workspace,
+    .preview-section,
+    .notices-section {
+        padding:
+            50px 15px;
+    }
+
+    .section-heading h2 {
+        font-size: 26px;
     }
 
     .activity-item {
         grid-template-columns:
-            35px 1fr;
+            36px 1fr;
+
+        gap: 12px;
+
+        padding: 17px 14px;
     }
 
     .activity-time,
@@ -1297,11 +1501,146 @@ footer p {
         grid-column: 2;
     }
 
+    .message-manager,
+    .editor-panel {
+        padding: 18px;
+    }
+
+    .message-layout {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .button-row button {
+        width: 100%;
+    }
+
+
+    /* MOBILE LED BOARD */
+
+    .preview-panel {
+        padding: 14px;
+
+        background: #f1f6f5;
+
+        border-radius: 10px;
+    }
+
+    .preview-top h3 {
+        font-size: 15px;
+    }
+
+    .real-board {
+        padding: 7px;
+
+        background: #171b1a;
+
+        border-radius: 6px;
+
+        box-shadow: none;
+
+        border: 1px solid #303735;
+    }
+
+    .board-top,
+    .board-bottom {
+        font-size: 7px;
+
+        padding: 2px 4px;
+
+        color: #899390;
+    }
+
+    .led-screen {
+        height: 125px;
+
+        margin: 7px 0;
+
+        border: 2px solid #303735;
+
+        border-radius: 3px;
+
+        background: #050606;
+
+        box-shadow: none;
+
+        overflow: hidden;
+    }
+
+    .led-message {
+        font-size: 23px;
+
+        letter-spacing: 1px;
+
+        text-shadow:
+            0 0 4px currentColor,
+            0 0 8px currentColor;
+    }
+
+    .preview-info {
+        margin-top: 15px;
+
+        gap: 6px;
+
+        grid-template-columns: 1fr;
+    }
+
+    .preview-info div {
+        padding: 10px 12px;
+    }
+
+    .history-table {
+        min-width: 800px;
+    }
+
     footer {
+        padding:
+            28px 20px;
+
         flex-direction: column;
 
-        gap: 15px;
-
         align-items: flex-start;
+
+        gap: 10px;
+    }
+}
+
+
+/* =====================================================
+   VERY SMALL PHONES
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .hero h1 {
+        font-size: 33px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .led-screen {
+        height: 120px;
+    }
+
+    .led-message {
+        font-size: 21px;
+    }
+
+    nav a {
+        font-size: 12px;
+
+        padding:
+            9px 13px;
     }
 }
