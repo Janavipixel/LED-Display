@@ -1,571 +1,500 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>SIES GST | LED Display Manager</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SIES GST | CSE IoT LED Display Management</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ================= LOGIN ================= -->
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
 
-    <section id="loginScreen" class="login-screen">
+<div id="loginScreen" class="login-screen">
 
-        <div class="login-card">
+    <div class="login-card">
 
-            <div class="college-mark">
+        <div class="college-mark">
 
-                <div class="logo-circle">
-                    <img src="logo.png" alt="SIES GST Logo">
-                </div>
-
-                <div>
-                    <h2>SIES GST</h2>
-                    <p>Graduate School of Technology</p>
-                </div>
-
+            <div class="logo-circle">
+                <img
+                    src="logo.png"
+                    alt="SIES GST Logo"
+                    onerror="this.style.display='none'"
+                >
             </div>
 
-            <div class="login-heading">
-
-                <p class="eyebrow">CSE-IoT • DIGITAL DISPLAY</p>
-
-                <h1>LED Display Manager</h1>
-
-                <p>
-                    Sign in to manage announcements and information
-                    displayed on the college LED board.
-                </p>
-
+            <div>
+                <h2>SIES GST</h2>
+                <p>CSE IoT Department</p>
             </div>
 
-            <form id="loginForm">
+        </div>
 
-                <label for="username">Email / User ID</label>
+        <div class="login-heading">
 
-                <input
-                    type="text"
-                    id="username"
-                    placeholder="Enter your user ID"
-                >
+            <p class="eyebrow">
+                LED DISPLAY MANAGEMENT
+            </p>
 
-                <label for="password">Password</label>
+            <h1>Welcome back</h1>
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter password"
-                >
-
-                <button type="submit" class="primary-btn">
-                    Sign In
-                </button>
-
-                <p id="loginMessage" class="login-message"></p>
-
-            </form>
-
-            <p class="login-note">
-                SIES GST • CSE-IoT
+            <p>
+                Sign in to manage the information displayed
+                on the college LED board.
             </p>
 
         </div>
 
-    </section>
+        <form id="loginForm">
+
+            <label for="username">
+                Username
+            </label>
+
+            <input
+                type="text"
+                id="username"
+                placeholder="Enter username"
+                required
+            >
+
+            <label for="password">
+                Password
+            </label>
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Sign In
+            </button>
+
+            <p
+                id="loginMessage"
+                class="login-message"
+            ></p>
+
+        </form>
+
+        <p class="login-note">
+            SIES Graduate School of Technology
+        </p>
+
+    </div>
+
+</div>
 
 
-    <!-- ================= MAIN APP ================= -->
+<!-- =====================================================
+     MAIN APPLICATION
+===================================================== -->
 
-    <section id="mainApp" class="hidden">
+<div id="mainApp" class="hidden">
 
-        <!-- ================= NAVBAR ================= -->
+    <!-- =================================================
+         NAVBAR
+    ================================================= -->
 
-        <header class="topbar">
+    <header class="topbar">
 
-            <div class="brand">
+        <div class="brand">
 
-                <div class="logo-circle small">
-                    <img src="logo.png" alt="SIES GST Logo">
+            <div class="logo-circle">
+
+                <img
+                    src="logo.png"
+                    alt="SIES GST Logo"
+                    onerror="this.style.display='none'"
+                >
+
+            </div>
+
+            <div class="brand-text">
+
+                <h2>SIES GST</h2>
+
+                <span>
+                    CSE IoT • LED Display Management
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <nav>
+
+            <a href="#home">
+                Home
+            </a>
+
+            <a href="#updates">
+                Updates
+            </a>
+
+            <a href="#workspace">
+                Create
+            </a>
+
+            <a href="#preview">
+                Preview
+            </a>
+
+            <a href="#notices">
+                History
+            </a>
+
+        </nav>
+
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+        >
+            Sign Out
+        </button>
+
+    </header>
+
+
+    <!-- =================================================
+         HOME
+    ================================================= -->
+
+    <main>
+
+        <section
+            id="home"
+            class="hero"
+        >
+
+            <div class="hero-content">
+
+                <p class="eyebrow">
+                    SIES GST • CSE IoT
+                </p>
+
+                <h1>
+                    Keep campus
+                    <span>information</span>
+                    visible.
+                </h1>
+
+                <p class="hero-text">
+                    Manage announcements, achievements,
+                    notices and important college information
+                    from one simple display management system.
+                </p>
+
+                <a
+                    href="#workspace"
+                    class="hero-btn"
+                >
+                    Create Display Message
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STATS
+        ================================================= -->
+
+        <section class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    MSG
                 </div>
 
                 <div>
-                    <h2>SIES GST</h2>
-                    <span>Graduate School of Technology</span>
+                    <h3 id="totalMessages">
+                        0
+                    </h3>
+
+                    <p>
+                        Display Messages
+                    </p>
                 </div>
 
             </div>
 
-            <nav>
 
-                <a href="#dashboard">Dashboard</a>
+            <div class="stat-card">
 
-                <a href="#create">Create Display</a>
-
-                <a href="#notices">History</a>
-
-                <a href="#preview">Live Preview</a>
-
-            </nav>
-
-            <button id="logoutBtn" class="logout-btn">
-                Sign Out
-            </button>
-
-        </header>
-
-
-        <!-- ================= DASHBOARD ================= -->
-
-        <main id="dashboard">
-
-            <!-- HERO -->
-
-            <section class="hero">
-
-                <div class="hero-content">
-
-                    <p class="eyebrow">
-                        CSE-IoT • DIGITAL DISPLAY SYSTEM
-                    </p>
-
-                    <h1>
-                        College information,
-                        <br>
-                        <span>on display.</span>
-                    </h1>
-
-                    <p class="hero-text">
-                        Create, arrange and preview announcements,
-                        achievements, events and important notices
-                        for the college LED display board.
-                    </p>
-
-                    <a href="#create" class="hero-btn">
-                        Create New Display
-                    </a>
-
+                <div class="stat-icon">
+                    LIVE
                 </div>
 
-            </section>
-
-
-            <!-- STATS -->
-
-            <section class="stats">
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">01</span>
-
-                    <div>
-                        <h3 id="messageCount">00</h3>
-                        <p>Display Messages</p>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">02</span>
-
-                    <div>
-                        <h3>03</h3>
-                        <p>Today's Notices</p>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">03</span>
-
-                    <div>
-                        <h3>CSE-IoT</h3>
-                        <p>Department</p>
-                    </div>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span class="stat-icon">04</span>
-
-                    <div>
-                        <h3>ONLINE</h3>
-                        <p>Board Status</p>
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ================= LATEST UPDATES ================= -->
-
-            <section class="activity-section">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        RECENT ACTIVITY
-                    </p>
-
-                    <h2>Latest updates</h2>
+                <div>
+                    <h3 id="activeMessages">
+                        0
+                    </h3>
 
                     <p>
-                        Recently created display content.
+                        Active Messages
                     </p>
-
                 </div>
 
-
-                <div class="activity-list">
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            01
-                        </div>
-
-                        <div class="activity-content">
-
-                            <h3>
-                                Congratulations to our academic toppers
-                            </h3>
-
-                            <p>
-                                Topper / Achievement
-                            </p>
-
-                        </div>
-
-                        <div class="activity-time">
-
-                            <strong>09:00 AM</strong>
-
-                            <span>Today</span>
-
-                        </div>
-
-                        <span class="activity-status active-status">
-                            Active
-                        </span>
-
-                    </div>
+            </div>
 
 
-                    <div class="activity-item">
+            <div class="stat-card">
 
-                        <div class="activity-icon">
-                            02
-                        </div>
-
-                        <div class="activity-content">
-
-                            <h3>
-                                Workshop on Internet of Things
-                            </h3>
-
-                            <p>
-                                Event / Workshop
-                            </p>
-
-                        </div>
-
-                        <div class="activity-time">
-
-                            <strong>11:30 AM</strong>
-
-                            <span>Today</span>
-
-                        </div>
-
-                        <span class="activity-status active-status">
-                            Active
-                        </span>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            03
-                        </div>
-
-                        <div class="activity-content">
-
-                            <h3>
-                                Internal assessment submission deadline
-                            </h3>
-
-                            <p>
-                                College Notice
-                            </p>
-
-                        </div>
-
-                        <div class="activity-time">
-
-                            <strong>02:00 PM</strong>
-
-                            <span>Today</span>
-
-                        </div>
-
-                        <span class="activity-status scheduled-status">
-                            Scheduled
-                        </span>
-
-                    </div>
-
+                <div class="stat-icon">
+                    QUE
                 </div>
 
-            </section>
-
-
-            <!-- ================= CREATE DISPLAY ================= -->
-
-            <section id="create" class="workspace">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        DISPLAY CONTROL
-                    </p>
-
-                    <h2>Create display messages</h2>
+                <div>
+                    <h3 id="queuedMessages">
+                        0
+                    </h3>
 
                     <p>
-                        Add as many messages as required. They will be
-                        displayed one after another on the LED board.
+                        Queued Messages
                     </p>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    LOG
+                </div>
+
+                <div>
+                    <h3 id="historyCount">
+                        0
+                    </h3>
+
+                    <p>
+                        Recorded Changes
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LATEST UPDATES
+        ================================================= -->
+
+        <section
+            id="updates"
+            class="activity-section"
+        >
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    LATEST ACTIVITY
+                </p>
+
+                <h2>
+                    Display Updates
+                </h2>
+
+                <p>
+                    Recent changes made to the LED display.
+                </p>
+
+            </div>
+
+
+            <div
+                id="activityList"
+                class="activity-list"
+            ></div>
+
+        </section>
+
+
+        <!-- =================================================
+             CREATE / MANAGE
+        ================================================= -->
+
+        <section
+            id="workspace"
+            class="workspace"
+        >
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    MESSAGE MANAGEMENT
+                </p>
+
+                <h2>
+                    Create & Manage
+                </h2>
+
+                <p>
+                    Prepare multiple messages for the LED display.
+                </p>
+
+            </div>
+
+
+            <div class="message-layout">
+
+
+                <!-- MESSAGE LIST -->
+
+                <div class="message-manager">
+
+                    <div class="manager-header">
+
+                        <div>
+
+                            <h3>
+                                Display Messages
+                            </h3>
+
+                            <p>
+                                Select a message to edit.
+                            </p>
+
+                        </div>
+
+                        <span id="messageCountBadge">
+                            0 messages
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="messageList"
+                    ></div>
+
+
+                    <button
+                        id="addMessageBtn"
+                        class="add-message-btn"
+                    >
+                        + Add New Message
+                    </button>
 
                 </div>
 
 
-                <div class="message-layout">
+                <!-- EDITOR -->
+
+                <div class="editor-panel">
+
+                    <div class="panel-title">
+
+                        <h3>
+                            Message Editor
+                        </h3>
+
+                        <span>
+                            CSE IoT
+                        </span>
+
+                    </div>
 
 
-                    <!-- MESSAGE QUEUE -->
+                    <div
+                        id="emptyEditor"
+                        class="empty-editor"
+                    >
 
-                    <div class="message-manager">
+                        <div>
 
-                        <div class="manager-header">
+                            <strong>
+                                No message selected
+                            </strong>
 
-                            <div>
-
-                                <h3>Display Queue</h3>
-
-                                <p>
-                                    Messages appear in this order.
-                                </p>
-
-                            </div>
-
-                            <span id="queueCount">
-                                0 messages
-                            </span>
+                            <p>
+                                Add a message to start editing.
+                            </p>
 
                         </div>
 
+                    </div>
 
-                        <div id="messageList"></div>
 
+                    <form
+                        id="messageForm"
+                        class="hidden"
+                    >
 
-                        <button
-                            id="addMessageBtn"
-                            class="add-message-btn"
+                        <label for="messageText">
+                            Display Message
+                        </label>
+
+                        <textarea
+                            id="messageText"
+                            maxlength="100"
+                            placeholder="Enter announcement or notice..."
+                            required
+                        ></textarea>
+
+                        <div
+                            id="characterCount"
+                            class="character-count"
                         >
-                            + Add Message
-                        </button>
-
-                    </div>
-
-
-                    <!-- EDITOR -->
-
-                    <div class="editor-panel">
-
-                        <div class="panel-title">
-
-                            <h3>Message Settings</h3>
-
-                            <span>CSE-IoT</span>
-
+                            0 / 100
                         </div>
 
 
-                        <div id="emptyEditor" class="empty-editor">
+                        <div class="two-column">
 
                             <div>
 
-                                <strong>
-                                    No message selected
-                                </strong>
-
-                                <p>
-                                    Add a message or select one
-                                    from the queue.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <div id="messageEditor" class="hidden">
-
-                            <label for="category">
-                                Display Category
-                            </label>
-
-                            <select id="category">
-
-                                <option value="notice">
-                                    College Notice
-                                </option>
-
-                                <option value="topper">
-                                    Topper / Achievement
-                                </option>
-
-                                <option value="event">
-                                    Event / Workshop
-                                </option>
-
-                                <option value="emergency">
-                                    Important Alert
-                                </option>
-
-                                <option value="custom">
-                                    Custom Message
-                                </option>
-
-                            </select>
-
-
-                            <label for="message">
-                                Message
-                            </label>
-
-                            <textarea
-                                id="message"
-                                placeholder="Enter the message to display..."
-                            ></textarea>
-
-
-                            <div class="character-count">
-
-                                <span id="charCount">
-                                    0
-                                </span>
-
-                                characters
-
-                            </div>
-
-
-                            <div class="two-column">
-
-                                <div>
-
-                                    <label for="effect">
-                                        Display Effect
-                                    </label>
-
-                                    <select id="effect">
-
-                                        <option value="static">
-                                            Static
-                                        </option>
-
-                                        <option value="scroll-left">
-                                            Scroll Left
-                                        </option>
-
-                                        <option value="scroll-right">
-                                            Scroll Right
-                                        </option>
-
-                                        <option value="slide-left">
-                                            Slide Left
-                                        </option>
-
-                                        <option value="slide-right">
-                                            Slide Right
-                                        </option>
-
-                                        <option value="blink">
-                                            Blink
-                                        </option>
-
-                                    </select>
-
-                                </div>
-
-
-                                <div>
-
-                                    <label for="duration">
-                                        Display Duration
-                                    </label>
-
-                                    <select id="duration">
-
-                                        <option value="3">
-                                            3 seconds
-                                        </option>
-
-                                        <option value="5">
-                                            5 seconds
-                                        </option>
-
-                                        <option value="8">
-                                            8 seconds
-                                        </option>
-
-                                        <option value="10">
-                                            10 seconds
-                                        </option>
-
-                                        <option value="15">
-                                            15 seconds
-                                        </option>
-
-                                    </select>
-
-                                </div>
-
-                            </div>
-
-
-                            <div>
-
-                                <label for="priority">
-                                    Priority
+                                <label for="messageEffect">
+                                    Display Effect
                                 </label>
 
-                                <select id="priority">
+                                <select id="messageEffect">
 
-                                    <option value="normal">
-                                        Normal
+                                    <option value="static">
+                                        Static
                                     </option>
 
-                                    <option value="high">
-                                        High
+                                    <option value="scroll-left">
+                                        Scroll Left
                                     </option>
 
-                                    <option value="urgent">
-                                        Urgent
+                                    <option value="scroll-right">
+                                        Scroll Right
+                                    </option>
+
+                                    <option value="slide-left">
+                                        Slide Left
+                                    </option>
+
+                                    <option value="slide-right">
+                                        Slide Right
+                                    </option>
+
+                                    <option value="blink">
+                                        Blink
                                     </option>
 
                                 </select>
@@ -573,257 +502,306 @@
                             </div>
 
 
-                            <div class="button-row">
+                            <div>
 
-                                <button
-                                    id="saveMessageBtn"
-                                    class="primary-btn"
-                                >
-                                    Save Message
-                                </button>
+                                <label for="messageDuration">
+                                    Duration
+                                </label>
 
+                                <select id="messageDuration">
 
-                                <button
-                                    id="deleteMessageBtn"
-                                    class="secondary-btn danger-btn"
-                                >
-                                    Delete
-                                </button>
+                                    <option value="5">
+                                        5 seconds
+                                    </option>
+
+                                    <option value="10">
+                                        10 seconds
+                                    </option>
+
+                                    <option value="15">
+                                        15 seconds
+                                    </option>
+
+                                    <option value="20">
+                                        20 seconds
+                                    </option>
+
+                                </select>
 
                             </div>
 
                         </div>
 
-                    </div>
 
-                </div>
+                        <div class="button-row">
 
-            </section>
-
-
-            <!-- ================= LIVE PREVIEW ================= -->
-
-            <section id="preview" class="preview-section">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        LIVE DISPLAY
-                    </p>
-
-                    <h2>LED board preview</h2>
-
-                    <p>
-                        Messages automatically rotate in sequence.
-                    </p>
-
-                </div>
-
-
-                <div class="preview-panel">
-
-                    <div class="preview-top">
-
-                        <div>
-
-                            <span class="live-tag">
-
-                                <span class="status-dot"></span>
-
-                                LIVE
-
-                            </span>
-
-                            <h3>
-                                SIES GST LED Display
-                            </h3>
-
-                        </div>
-
-
-                        <div class="display-counter">
-
-                            <span id="currentMessageNumber">
-                                0
-                            </span>
-
-                            /
-
-                            <span id="totalMessages">
-                                0
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- LED BOARD -->
-
-                    <div class="real-board">
-
-                        <div class="board-top">
-
-                            <span>
-                                SIES GST
-                            </span>
-
-                            <span>
-                                CSE-IoT
-                            </span>
-
-                        </div>
-
-
-                        <div class="led-screen">
-
-                            <div
-                                id="ledMessage"
-                                class="led-message static"
+                            <button
+                                type="submit"
+                                class="primary-btn"
                             >
-                                ADD A MESSAGE
-                            </div>
+                                Save Message
+                            </button>
+
+                            <button
+                                type="button"
+                                id="deleteMessageBtn"
+                                class="secondary-btn danger-btn"
+                            >
+                                Delete
+                            </button>
 
                         </div>
 
-
-                        <div class="board-bottom">
-
-                            <span>
-                                DISPLAY ONLINE
-                            </span>
-
-                            <span id="clock">
-                                00:00:00
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- PREVIEW INFO -->
-
-                    <div class="preview-info">
-
-                        <div>
-
-                            <span>
-                                Current Message
-                            </span>
-
-                            <strong id="previewNumber">
-                                —
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Current Effect
-                            </span>
-
-                            <strong id="previewEffect">
-                                —
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Board Status
-                            </span>
-
-                            <strong>
-                                ONLINE
-                            </strong>
-
-                        </div>
-
-                    </div>
+                    </form>
 
                 </div>
 
-            </section>
+            </div>
+
+        </section>
 
 
-            <!-- ================= DISPLAY HISTORY ================= -->
+        <!-- =================================================
+             LIVE PREVIEW
+        ================================================= -->
 
-            <section id="notices" class="notices-section">
+        <section
+            id="preview"
+            class="preview-section"
+        >
 
-                <div class="section-heading">
+            <div class="section-heading">
 
-                    <p class="eyebrow">
-                        ACTIVITY LOG
-                    </p>
+                <p class="eyebrow">
+                    LIVE DISPLAY
+                </p>
 
-                    <h2>Display History</h2>
-
-                    <p>
-                        A record of every message added, edited or deleted.
-                    </p>
-
-                </div>
-
-
-                <div class="history-table">
-
-                    <div class="history-head">
-
-                        <span>DATE</span>
-
-                        <span>TIME</span>
-
-                        <span>ACTION</span>
-
-                        <span>MESSAGE</span>
-
-                        <span>CATEGORY</span>
-
-                        <span>EFFECT</span>
-
-                    </div>
-
-
-                    <div id="historyRows"></div>
-
-                </div>
-
-            </section>
-
-        </main>
-
-
-        <!-- ================= FOOTER ================= -->
-
-        <footer>
-
-            <div>
-
-                <strong>SIES GST</strong>
+                <h2>
+                    LED Board Preview
+                </h2>
 
                 <p>
-                    Graduate School of Technology
+                    Preview how the selected messages will appear.
                 </p>
 
             </div>
 
 
-            <p>
-                CSE-IoT LED Display Management System
-            </p>
+            <div class="preview-panel">
 
-        </footer>
+                <div class="preview-top">
 
-    </section>
+                    <div>
+
+                        <span class="live-tag">
+
+                            <span class="status-dot"></span>
+
+                            LIVE PREVIEW
+
+                        </span>
+
+                        <h3>
+                            SIES GST Information Display
+                        </h3>
+
+                    </div>
+
+                    <span
+                        id="displayCounter"
+                        class="display-counter"
+                    >
+                        1 / 1
+                    </span>
+
+                </div>
 
 
-    <script src="script.js"></script>
+                <!-- LED BOARD -->
+
+                <div class="real-board">
+
+                    <div class="board-top">
+
+                        <span>
+                            SIES GST
+                        </span>
+
+                        <span>
+                            CSE IoT
+                        </span>
+
+                    </div>
+
+
+                    <div class="led-screen">
+
+                        <div
+                            id="ledMessage"
+                            class="led-message static"
+                        >
+                            Welcome to SIES GST
+                        </div>
+
+                    </div>
+
+
+                    <div class="board-bottom">
+
+                        <span>
+                            INFORMATION DISPLAY
+                        </span>
+
+                        <span>
+                            ONLINE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="preview-info">
+
+                    <div>
+
+                        <span>
+                            CURRENT MESSAGE
+                        </span>
+
+                        <strong id="previewMessage">
+                            Welcome to SIES GST
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            EFFECT
+                        </span>
+
+                        <strong id="previewEffect">
+                            Static
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            STATUS
+                        </span>
+
+                        <strong>
+                            Displaying
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HISTORY
+        ================================================= -->
+
+        <section
+            id="notices"
+            class="notices-section"
+        >
+
+            <div class="section-heading">
+
+                <p class="eyebrow">
+                    DISPLAY HISTORY
+                </p>
+
+                <h2>
+                    Display Notices
+                </h2>
+
+                <p>
+                    Track what was changed, when it was changed,
+                    and which message was affected.
+                </p>
+
+            </div>
+
+
+            <div class="history-wrapper">
+
+                <div class="history-table">
+
+                    <div class="history-head">
+
+                        <span>
+                            DATE
+                        </span>
+
+                        <span>
+                            TIME
+                        </span>
+
+                        <span>
+                            ACTION
+                        </span>
+
+                        <span>
+                            MESSAGE
+                        </span>
+
+                        <span>
+                            EFFECT
+                        </span>
+
+                        <span>
+                            STATUS
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="historyList"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================= -->
+
+    <footer>
+
+        <p>
+            <strong>SIES GST</strong>
+            • CSE IoT
+        </p>
+
+        <p>
+            College Information Display Management
+        </p>
+
+    </footer>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
-
 </html>
