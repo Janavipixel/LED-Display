@@ -28,7 +28,7 @@ let messages = [
 
     {
         id: 3,
-        text: "All students are requested to check the latest notice.",
+        text: "All students are required to check the latest notice.",
         effect: "scroll-left",
         duration: 10,
         status: "Active"
@@ -65,6 +65,7 @@ let selectedMessageId = null;
 let currentPreviewIndex = 0;
 
 let previewTimer = null;
+
 
 
 /* =====================================================
@@ -147,8 +148,9 @@ const messageCountBadge =
     document.getElementById("messageCountBadge");
 
 
+
 /* =====================================================
-   LOGIN
+   LOGIN VALIDATION
 ===================================================== */
 
 loginForm.addEventListener(
@@ -157,17 +159,55 @@ loginForm.addEventListener(
 
         event.preventDefault();
 
-        const username =
-            document.getElementById("username").value.trim();
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
 
         const password =
-            document.getElementById("password").value.trim();
+            document
+                .getElementById("password")
+                .value;
 
 
-        if (username === "" || password === "") {
+        /*
+         * Email must end with @SIES.edu.in
+         */
+
+        const emailPattern =
+            /^[^\s@]+@sies\.edu\.in$/;
+
+
+        /*
+         * Password:
+         *
+         * Exactly 8 characters
+         * At least one uppercase
+         * At least one lowercase
+         * At least one number
+         * At least one special character
+         */
+
+        const passwordPattern =
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z\d]).{8}$/;
+
+
+        if (!emailPattern.test(email)) {
 
             loginMessage.textContent =
-                "Please enter username and password.";
+                "Please use a valid SIES email ending with @SIES.edu.in.";
+
+            return;
+        }
+
+
+        if (!passwordPattern.test(password)) {
+
+            loginMessage.textContent =
+                "Password must be exactly 8 characters and contain uppercase, lowercase, number and special character.";
 
             return;
         }
@@ -175,16 +215,23 @@ loginForm.addEventListener(
 
         /*
          * Prototype login.
-         * Any non-empty credentials are accepted.
+         *
+         * Backend authentication will be connected later.
          */
+
+        loginMessage.textContent = "";
+
 
         loginScreen.classList.add("hidden");
 
         mainApp.classList.remove("hidden");
 
+
         initializeApplication();
+
     }
 );
+
 
 
 /* =====================================================
@@ -203,13 +250,20 @@ logoutBtn.addEventListener(
 
         loginMessage.textContent = "";
 
+        clearTimeout(previewTimer);
+
+
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
 
     }
 );
+
 
 
 /* =====================================================
@@ -231,6 +285,7 @@ function initializeApplication() {
 }
 
 
+
 /* =====================================================
    RENDER MESSAGE LIST
 ===================================================== */
@@ -243,10 +298,13 @@ function renderMessages() {
     messages.forEach(
         function (message, index) {
 
+
             const card =
                 document.createElement("div");
 
-            card.className = "message-card";
+
+            card.className =
+                "message-card";
 
 
             if (
@@ -309,9 +367,14 @@ function renderMessages() {
 
     messageCountBadge.textContent =
         messages.length +
-        (messages.length === 1 ? " message" : " messages");
+        (
+            messages.length === 1
+                ? " message"
+                : " messages"
+        );
 
 }
+
 
 
 /* =====================================================
@@ -325,7 +388,8 @@ function selectMessage(id) {
 
     const message =
         messages.find(
-            item => item.id === id
+            item =>
+                item.id === id
         );
 
 
@@ -344,8 +408,10 @@ function selectMessage(id) {
     messageText.value =
         message.text;
 
+
     messageEffect.value =
         message.effect;
+
 
     messageDuration.value =
         message.duration;
@@ -358,6 +424,7 @@ function selectMessage(id) {
 }
 
 
+
 /* =====================================================
    ADD MESSAGE
 ===================================================== */
@@ -365,6 +432,7 @@ function selectMessage(id) {
 addMessageBtn.addEventListener(
     "click",
     function () {
+
 
         const newId =
             Date.now();
@@ -374,13 +442,17 @@ addMessageBtn.addEventListener(
 
             id: newId,
 
-            text: "New college announcement",
+            text:
+                "New college announcement",
 
-            effect: "scroll-left",
+            effect:
+                "scroll-left",
 
-            duration: 10,
+            duration:
+                10,
 
-            status: "Active"
+            status:
+                "Active"
 
         };
 
@@ -413,11 +485,15 @@ addMessageBtn.addEventListener(
         document
             .getElementById("workspace")
             .scrollIntoView({
-                behavior: "smooth"
+
+                behavior:
+                    "smooth"
+
             });
 
     }
 );
+
 
 
 /* =====================================================
@@ -426,10 +502,23 @@ addMessageBtn.addEventListener(
 
 messageForm.addEventListener(
     "submit",
-    function (event) {
+    async function (event) {
 
         event.preventDefault();
+    
+        const backendResponse = await fetch("http://localhost:5000/api/messages", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        message: messageText.value.trim()
+    })
+});
 
+const backendData = await backendResponse.json();
+
+console.log("Backend Response:", backendData);
 
         if (
             selectedMessageId === null
@@ -506,6 +595,7 @@ messageForm.addEventListener(
 );
 
 
+
 /* =====================================================
    DELETE MESSAGE
 ===================================================== */
@@ -513,6 +603,7 @@ messageForm.addEventListener(
 deleteMessageBtn.addEventListener(
     "click",
     function () {
+
 
         if (
             selectedMessageId === null
@@ -564,7 +655,8 @@ deleteMessageBtn.addEventListener(
             );
 
 
-        selectedMessageId = null;
+        selectedMessageId =
+            null;
 
 
         messageForm.classList.add("hidden");
@@ -586,6 +678,7 @@ deleteMessageBtn.addEventListener(
 );
 
 
+
 /* =====================================================
    CHARACTER COUNT
 ===================================================== */
@@ -605,16 +698,19 @@ function updateCharacterCount() {
 }
 
 
+
 /* =====================================================
    PREVIEW
 ===================================================== */
 
 function startPreview() {
 
-    clearInterval(previewTimer);
+    clearTimeout(previewTimer);
 
 
-    if (messages.length === 0) {
+    if (
+        messages.length === 0
+    ) {
 
         showEmptyPreview();
 
@@ -623,53 +719,40 @@ function startPreview() {
     }
 
 
-    currentPreviewIndex = 0;
+    currentPreviewIndex =
+        0;
+
 
     showPreviewMessage();
 
-
-    previewTimer =
-        setInterval(
-            function () {
-
-                if (
-                    messages.length === 0
-                ) {
-
-                    return;
-
-                }
-
-
-                currentPreviewIndex++;
-
-                if (
-                    currentPreviewIndex >=
-                    messages.length
-                ) {
-
-                    currentPreviewIndex = 0;
-
-                }
-
-
-                showPreviewMessage();
-
-            },
-
-            7000
-        );
-
 }
+
 
 
 function restartPreview() {
 
-    clearInterval(previewTimer);
+    clearTimeout(previewTimer);
 
-    startPreview();
+
+    if (
+        messages.length === 0
+    ) {
+
+        showEmptyPreview();
+
+        return;
+
+    }
+
+
+    currentPreviewIndex =
+        0;
+
+
+    showPreviewMessage();
 
 }
+
 
 
 /* =====================================================
@@ -677,6 +760,7 @@ function restartPreview() {
 ===================================================== */
 
 function showPreviewMessage() {
+
 
     if (
         messages.length === 0
@@ -700,10 +784,33 @@ function showPreviewMessage() {
     }
 
 
-    ledMessage.className =
-        "led-message " +
-        message.effect;
+    /*
+     * Reset animation
+     */
 
+    ledMessage.className =
+        "led-message";
+
+
+    ledMessage.style.animationDuration =
+        "";
+
+
+    ledMessage.style.removeProperty(
+        "--message-width"
+    );
+
+
+    /*
+     * Force browser to restart animation
+     */
+
+    void ledMessage.offsetWidth;
+
+
+    /*
+     * Set text
+     */
 
     ledMessage.textContent =
         message.text;
@@ -714,15 +821,258 @@ function showPreviewMessage() {
 
 
     previewEffect.textContent =
-        formatEffect(message.effect);
+        formatEffect(
+            message.effect
+        );
 
 
     displayCounter.textContent =
-        (currentPreviewIndex + 1) +
+        (
+            currentPreviewIndex + 1
+        ) +
         " / " +
         messages.length;
 
+
+    /*
+     * Add effect
+     */
+
+    ledMessage.classList.add(
+        message.effect
+    );
+
+
+    /*
+     * Wait until browser calculates
+     * the actual text dimensions.
+     */
+
+    requestAnimationFrame(
+        function () {
+
+
+            const screen =
+                document.querySelector(
+                    ".led-screen"
+                );
+
+
+            if (!screen) {
+
+                return;
+
+            }
+
+
+            const screenWidth =
+                screen.clientWidth;
+
+
+            const textWidth =
+                ledMessage.scrollWidth;
+
+
+            let displayTime;
+
+
+
+            /* =========================================
+               STATIC
+            ========================================= */
+
+            if (
+                message.effect === "static"
+            ) {
+
+
+                /*
+                 * Static message remains visible
+                 * for the selected duration.
+                 */
+
+                displayTime =
+                    Math.max(
+                        Number(message.duration) *
+                        1000,
+
+                        5000
+                    );
+
+
+            }
+
+
+
+            /* =========================================
+               BLINK
+            ========================================= */
+
+            else if (
+                message.effect === "blink"
+            ) {
+
+
+                displayTime =
+                    Math.max(
+                        Number(message.duration) *
+                        1000,
+
+                        5000
+                    );
+
+
+            }
+
+
+
+            /* =========================================
+               SCROLL LEFT / RIGHT
+            ========================================= */
+
+            else if (
+
+                message.effect ===
+                    "scroll-left"
+
+                ||
+
+                message.effect ===
+                    "scroll-right"
+
+            ) {
+
+
+                /*
+                 * Complete distance:
+                 *
+                 * screen width
+                 * +
+                 * complete text width
+                 */
+
+                const distance =
+                    screenWidth +
+                    textWidth;
+
+
+                /*
+                 * Mobile = slower
+                 * Desktop = slightly faster
+                 */
+
+                const speed =
+                    window.innerWidth <= 600
+                        ? 35
+                        : 70;
+
+
+                const animationTime =
+                    (
+                        distance /
+                        speed
+                    ) * 1000;
+
+
+                /*
+                 * Tell CSS the actual
+                 * width of this message.
+                 */
+
+                ledMessage.style.setProperty(
+                    "--message-width",
+                    textWidth + "px"
+                );
+
+
+                /*
+                 * Set exact animation duration.
+                 */
+
+                ledMessage.style.animationDuration =
+                    animationTime + "ms";
+
+
+                /*
+                 * Wait until the entire
+                 * message has entered and
+                 * completely left the screen.
+                 */
+
+                displayTime =
+                    animationTime +
+                    1200;
+
+            }
+
+
+
+            /* =========================================
+               SLIDE
+            ========================================= */
+
+            else {
+
+
+                displayTime =
+                    Math.max(
+                        Number(message.duration) *
+                        1000,
+
+                        5000
+                    );
+
+            }
+
+
+
+            /* =========================================
+               NEXT MESSAGE
+            ========================================= */
+
+            previewTimer =
+                setTimeout(
+                    function () {
+
+
+                        if (
+                            messages.length === 0
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        currentPreviewIndex++;
+
+
+                        if (
+                            currentPreviewIndex >=
+                            messages.length
+                        ) {
+
+                            currentPreviewIndex =
+                                0;
+
+                        }
+
+
+                        showPreviewMessage();
+
+
+                    },
+
+                    displayTime
+
+                );
+
+
+        }
+    );
+
 }
+
 
 
 /* =====================================================
@@ -731,22 +1081,34 @@ function showPreviewMessage() {
 
 function showEmptyPreview() {
 
+    clearTimeout(previewTimer);
+
+
     ledMessage.className =
         "led-message static";
+
+
+    ledMessage.style.animationDuration =
+        "";
+
 
     ledMessage.textContent =
         "No messages available";
 
+
     previewMessage.textContent =
         "No messages available";
 
+
     previewEffect.textContent =
         "Static";
+
 
     displayCounter.textContent =
         "0 / 0";
 
 }
+
 
 
 /* =====================================================
@@ -759,6 +1121,7 @@ function addHistory(
     effect
 ) {
 
+
     const now =
         new Date();
 
@@ -767,9 +1130,14 @@ function addHistory(
         now.toLocaleDateString(
             "en-IN",
             {
-                day: "2-digit",
-                month: "short",
-                year: "numeric"
+                day:
+                    "2-digit",
+
+                month:
+                    "short",
+
+                year:
+                    "numeric"
             }
         );
 
@@ -778,23 +1146,31 @@ function addHistory(
         now.toLocaleTimeString(
             "en-IN",
             {
-                hour: "2-digit",
-                minute: "2-digit"
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
             }
         );
 
 
     historyData.unshift({
 
-        date: date,
+        date:
+            date,
 
-        time: time,
+        time:
+            time,
 
-        action: action,
+        action:
+            action,
 
-        message: message,
+        message:
+            message,
 
-        effect: formatEffect(effect),
+        effect:
+            formatEffect(effect),
 
         status:
             action === "Deleted"
@@ -815,6 +1191,7 @@ function addHistory(
 }
 
 
+
 /* =====================================================
    RENDER HISTORY
 ===================================================== */
@@ -827,6 +1204,7 @@ function renderHistory() {
     if (
         historyData.length === 0
     ) {
+
 
         historyList.innerHTML = `
 
@@ -860,6 +1238,7 @@ function renderHistory() {
 
         `;
 
+
         return;
 
     }
@@ -868,8 +1247,11 @@ function renderHistory() {
     historyData.forEach(
         function (item) {
 
+
             const row =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             row.className =
@@ -910,9 +1292,7 @@ function renderHistory() {
                     ${item.time}
                 </span>
 
-                <span
-                    class="${actionClass}"
-                >
+                <span class="${actionClass}">
                     ${item.action}
                 </span>
 
@@ -933,12 +1313,15 @@ function renderHistory() {
             `;
 
 
-            historyList.appendChild(row);
+            historyList.appendChild(
+                row
+            );
 
         }
     );
 
 }
+
 
 
 /* =====================================================
@@ -951,12 +1334,16 @@ function renderActivity() {
 
 
     const recent =
-        historyData.slice(0, 5);
+        historyData.slice(
+            0,
+            5
+        );
 
 
     if (
         recent.length === 0
     ) {
+
 
         activityList.innerHTML = `
 
@@ -982,6 +1369,7 @@ function renderActivity() {
 
         `;
 
+
         return;
 
     }
@@ -990,8 +1378,11 @@ function renderActivity() {
     recent.forEach(
         function (item) {
 
+
             const activity =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             activity.className =
@@ -1048,6 +1439,7 @@ function renderActivity() {
 }
 
 
+
 /* =====================================================
    STATISTICS
 ===================================================== */
@@ -1076,6 +1468,7 @@ function updateStats() {
         historyData.length;
 
 }
+
 
 
 /* =====================================================
@@ -1107,9 +1500,11 @@ function formatEffect(effect) {
     };
 
 
-    return names[effect] || "Static";
+    return names[effect] ||
+        "Static";
 
 }
+
 
 
 /* =====================================================
@@ -1141,6 +1536,7 @@ function getActionShort(action) {
 }
 
 
+
 /* =====================================================
    HTML SAFETY
 ===================================================== */
@@ -1148,7 +1544,9 @@ function getActionShort(action) {
 function escapeHTML(text) {
 
     const div =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     div.textContent =
@@ -1158,6 +1556,7 @@ function escapeHTML(text) {
     return div.innerHTML;
 
 }
+
 
 
 /* =====================================================
@@ -1180,6 +1579,7 @@ window.addEventListener(
     "scroll",
     function () {
 
+
         let current =
             "home";
 
@@ -1187,8 +1587,10 @@ window.addEventListener(
         sections.forEach(
             function (section) {
 
+
                 const sectionTop =
-                    section.offsetTop - 170;
+                    section.offsetTop -
+                    170;
 
 
                 if (
@@ -1208,13 +1610,16 @@ window.addEventListener(
         navLinks.forEach(
             function (link) {
 
+
                 link.classList.remove(
                     "active-nav"
                 );
 
 
                 const target =
-                    link.getAttribute("href");
+                    link.getAttribute(
+                        "href"
+                    );
 
 
                 if (
@@ -1235,6 +1640,7 @@ window.addEventListener(
 );
 
 
+
 /* =====================================================
    NAVBAR CLICK POSITION
 ===================================================== */
@@ -1242,12 +1648,16 @@ window.addEventListener(
 navLinks.forEach(
     function (link) {
 
+
         link.addEventListener(
             "click",
-            function (event) {
+            async function (event) {
+
 
                 const targetId =
-                    link.getAttribute("href");
+                    link.getAttribute(
+                        "href"
+                    );
 
 
                 const target =
@@ -1265,7 +1675,19 @@ navLinks.forEach(
 
                 event.preventDefault();
 
+                const backendResponse = await fetch("http://localhost:5000/api/messages", {
+                    method: "POST",
+                    headers: {
+                         "Content-Type": "application/json"
+                            },
+                    body: JSON.stringify({
+                    message: messageText.value.trim()
+                }) 
+            });
 
+const backendData = await backendResponse.json();
+
+console.log("Backend Response:", backendData);
                 const navbar =
                     document.querySelector(
                         ".topbar"
@@ -1277,7 +1699,9 @@ navLinks.forEach(
 
 
                 const targetPosition =
-                    target.getBoundingClientRect().top
+                    target
+                        .getBoundingClientRect()
+                        .top
                     +
                     window.pageYOffset
                     -
