@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -11,9 +13,12 @@
     <title>SIES GST | CSE IoT LED Display Management</title>
 
     <link rel="stylesheet" href="style.css">
+
 </head>
 
+
 <body>
+
 
 <!-- =====================================================
      LOGIN SCREEN
@@ -23,22 +28,32 @@
 
     <div class="login-card">
 
+
         <div class="college-mark">
 
             <div class="logo-circle">
+
                 <img
                     src="logo.png"
                     alt="SIES GST Logo"
                     onerror="this.style.display='none'"
                 >
+
             </div>
 
+
             <div>
+
                 <h2>SIES GST</h2>
-                <p>CSE IoT Department</p>
+
+                <p>
+                    CSE IoT Department
+                </p>
+
             </div>
 
         </div>
+
 
         <div class="login-heading">
 
@@ -46,7 +61,9 @@
                 LED DISPLAY MANAGEMENT
             </p>
 
-            <h1>Welcome back</h1>
+            <h1>
+                Welcome back
+            </h1>
 
             <p>
                 Sign in to manage the information displayed
@@ -55,29 +72,47 @@
 
         </div>
 
+
         <form id="loginForm">
 
-            <label for="username">
-                Username
+
+            <label for="email">
+                Email Address
             </label>
 
+
             <input
-                type="text"
-                id="username"
-                placeholder="Enter username"
+                type="email"
+                id="email"
+                placeholder="Enter your SIES email"
+                autocomplete="email"
                 required
             >
+
 
             <label for="password">
                 Password
             </label>
 
+
             <input
                 type="password"
                 id="password"
-                placeholder="Enter password"
+                placeholder="8-character password"
+                maxlength="8"
+                autocomplete="current-password"
                 required
             >
+
+
+            <p class="password-requirements">
+
+                Password must contain:
+                8 characters, uppercase letter,
+                lowercase letter, number and special character.
+
+            </p>
+
 
             <button
                 type="submit"
@@ -86,33 +121,43 @@
                 Sign In
             </button>
 
+
             <p
                 id="loginMessage"
                 class="login-message"
             ></p>
 
+
         </form>
+
 
         <p class="login-note">
             SIES Graduate School of Technology
         </p>
+
 
     </div>
 
 </div>
 
 
+
 <!-- =====================================================
      MAIN APPLICATION
 ===================================================== -->
 
-<div id="mainApp" class="hidden">
+<div
+    id="mainApp"
+    class="hidden"
+>
+
 
     <!-- =================================================
          NAVBAR
     ================================================= -->
 
     <header class="topbar">
+
 
         <div class="brand">
 
@@ -126,9 +171,12 @@
 
             </div>
 
+
             <div class="brand-text">
 
-                <h2>SIES GST</h2>
+                <h2>
+                    SIES GST
+                </h2>
 
                 <span>
                     CSE IoT • LED Display Management
@@ -171,14 +219,21 @@
             Sign Out
         </button>
 
+
     </header>
 
 
+
     <!-- =================================================
-         HOME
+         MAIN
     ================================================= -->
 
     <main>
+
+
+        <!-- =================================================
+             HOME
+        ================================================= -->
 
         <section
             id="home"
@@ -198,9 +253,11 @@
                 </h1>
 
                 <p class="hero-text">
+
                     Manage announcements, achievements,
                     notices and important college information
                     from one simple display management system.
+
                 </p>
 
                 <a
@@ -215,11 +272,13 @@
         </section>
 
 
+
         <!-- =================================================
              STATS
         ================================================= -->
 
         <section class="stats">
+
 
             <div class="stat-card">
 
@@ -228,6 +287,7 @@
                 </div>
 
                 <div>
+
                     <h3 id="totalMessages">
                         0
                     </h3>
@@ -235,6 +295,7 @@
                     <p>
                         Display Messages
                     </p>
+
                 </div>
 
             </div>
@@ -247,6 +308,7 @@
                 </div>
 
                 <div>
+
                     <h3 id="activeMessages">
                         0
                     </h3>
@@ -254,6 +316,7 @@
                     <p>
                         Active Messages
                     </p>
+
                 </div>
 
             </div>
@@ -266,6 +329,7 @@
                 </div>
 
                 <div>
+
                     <h3 id="queuedMessages">
                         0
                     </h3>
@@ -273,6 +337,7 @@
                     <p>
                         Queued Messages
                     </p>
+
                 </div>
 
             </div>
@@ -285,6 +350,7 @@
                 </div>
 
                 <div>
+
                     <h3 id="historyCount">
                         0
                     </h3>
@@ -292,11 +358,14 @@
                     <p>
                         Recorded Changes
                     </p>
+
                 </div>
 
             </div>
 
+
         </section>
+
 
 
         <!-- =================================================
@@ -307,6 +376,7 @@
             id="updates"
             class="activity-section"
         >
+
 
             <div class="section-heading">
 
@@ -330,7 +400,9 @@
                 class="activity-list"
             ></div>
 
+
         </section>
+
 
 
         <!-- =================================================
@@ -341,6 +413,7 @@
             id="workspace"
             class="workspace"
         >
+
 
             <div class="section-heading">
 
@@ -366,6 +439,7 @@
 
                 <div class="message-manager">
 
+
                     <div class="manager-header">
 
                         <div>
@@ -380,6 +454,7 @@
 
                         </div>
 
+
                         <span id="messageCountBadge">
                             0 messages
                         </span>
@@ -387,9 +462,7 @@
                     </div>
 
 
-                    <div
-                        id="messageList"
-                    ></div>
+                    <div id="messageList"></div>
 
 
                     <button
@@ -399,12 +472,15 @@
                         + Add New Message
                     </button>
 
+
                 </div>
+
 
 
                 <!-- EDITOR -->
 
                 <div class="editor-panel">
+
 
                     <div class="panel-title">
 
@@ -444,9 +520,11 @@
                         class="hidden"
                     >
 
+
                         <label for="messageText">
                             Display Message
                         </label>
+
 
                         <textarea
                             id="messageText"
@@ -454,6 +532,7 @@
                             placeholder="Enter announcement or notice..."
                             required
                         ></textarea>
+
 
                         <div
                             id="characterCount"
@@ -463,13 +542,16 @@
                         </div>
 
 
+
                         <div class="two-column">
+
 
                             <div>
 
                                 <label for="messageEffect">
                                     Display Effect
                                 </label>
+
 
                                 <select id="messageEffect">
 
@@ -508,6 +590,7 @@
                                     Duration
                                 </label>
 
+
                                 <select id="messageDuration">
 
                                     <option value="5">
@@ -530,10 +613,13 @@
 
                             </div>
 
+
                         </div>
 
 
+
                         <div class="button-row">
+
 
                             <button
                                 type="submit"
@@ -541,6 +627,7 @@
                             >
                                 Save Message
                             </button>
+
 
                             <button
                                 type="button"
@@ -550,15 +637,21 @@
                                 Delete
                             </button>
 
+
                         </div>
+
 
                     </form>
 
+
                 </div>
+
 
             </div>
 
+
         </section>
+
 
 
         <!-- =================================================
@@ -569,6 +662,7 @@
             id="preview"
             class="preview-section"
         >
+
 
             <div class="section-heading">
 
@@ -587,9 +681,12 @@
             </div>
 
 
+
             <div class="preview-panel">
 
+
                 <div class="preview-top">
+
 
                     <div>
 
@@ -601,11 +698,13 @@
 
                         </span>
 
+
                         <h3>
                             SIES GST Information Display
                         </h3>
 
                     </div>
+
 
                     <span
                         id="displayCounter"
@@ -614,12 +713,15 @@
                         1 / 1
                     </span>
 
+
                 </div>
+
 
 
                 <!-- LED BOARD -->
 
                 <div class="real-board">
+
 
                     <div class="board-top">
 
@@ -634,6 +736,7 @@
                     </div>
 
 
+
                     <div class="led-screen">
 
                         <div
@@ -644,6 +747,7 @@
                         </div>
 
                     </div>
+
 
 
                     <div class="board-bottom">
@@ -658,10 +762,13 @@
 
                     </div>
 
+
                 </div>
 
 
+
                 <div class="preview-info">
+
 
                     <div>
 
@@ -701,11 +808,15 @@
 
                     </div>
 
+
                 </div>
+
 
             </div>
 
+
         </section>
+
 
 
         <!-- =================================================
@@ -716,6 +827,7 @@
             id="notices"
             class="notices-section"
         >
+
 
             <div class="section-heading">
 
@@ -735,9 +847,12 @@
             </div>
 
 
+
             <div class="history-wrapper">
 
+
                 <div class="history-table">
+
 
                     <div class="history-head">
 
@@ -768,17 +883,20 @@
                     </div>
 
 
-                    <div
-                        id="historyList"
-                    ></div>
+                    <div id="historyList"></div>
+
 
                 </div>
 
+
             </div>
+
 
         </section>
 
+
     </main>
+
 
 
     <!-- =================================================
@@ -788,9 +906,15 @@
     <footer>
 
         <p>
-            <strong>SIES GST</strong>
+
+            <strong>
+                SIES GST
+            </strong>
+
             • CSE IoT
+
         </p>
+
 
         <p>
             College Information Display Management
@@ -798,10 +922,13 @@
 
     </footer>
 
+
 </div>
+
 
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
