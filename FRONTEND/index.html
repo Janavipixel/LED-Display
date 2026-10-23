@@ -84,7 +84,7 @@
             <input
                 type="email"
                 id="email"
-                placeholder="Enter your SIES email"
+                placeholder="Enter your sies email"
                 autocomplete="email"
                 required
             >
@@ -98,8 +98,8 @@
             <input
                 type="password"
                 id="password"
-                placeholder="8-character password"
-                maxlength="8"
+                placeholder="Enter password"
+                maxlength="32"
                 autocomplete="current-password"
                 required
             >
@@ -464,6 +464,28 @@
 
                     <div id="messageList"></div>
 
+                    <!-- Message pagination / View All controls -->
+                    <div id="messagePaginationControls" class="message-list-controls">
+                        <span id="messageListStatus" class="message-badge">
+                            Showing 5 messages
+                        </span>
+                        <div class="message-list-actions">
+                            <button
+                                type="button"
+                                id="loadMoreMessagesBtn"
+                                class="teal-outline-btn-sm"
+                            >
+                                Load More (+5)
+                            </button>
+                            <button
+                                type="button"
+                                id="toggleMessagesViewBtn"
+                                class="teal-outline-btn-sm"
+                            >
+                                View All
+                            </button>
+                        </div>
+                    </div>
 
                     <button
                         id="addMessageBtn"
@@ -888,6 +910,28 @@
 
                 </div>
 
+                <!-- History pagination / View All controls -->
+                <div id="historyPaginationControls" class="history-footer-controls">
+                    <span id="historyStatusBadge" class="history-badge">
+                        Showing 5 most recent records
+                    </span>
+                    <div class="history-actions-row">
+                        <button
+                            type="button"
+                            id="loadMoreHistoryBtn"
+                            class="teal-outline-btn"
+                        >
+                            Load More (+5)
+                        </button>
+                        <button
+                            type="button"
+                            id="toggleHistoryViewBtn"
+                            class="teal-outline-btn"
+                        >
+                            View All
+                        </button>
+                    </div>
+                </div>
 
             </div>
 
